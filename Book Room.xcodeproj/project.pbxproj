@@ -52,6 +52,7 @@
 		422433161918121D00AF9488 /* GTLErrorObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 422433151918121D00AF9488 /* GTLErrorObject.m */; };
 		422433191918124800AF9488 /* GTLFramework.m in Sources */ = {isa = PBXBuildFile; fileRef = 422433181918124800AF9488 /* GTLFramework.m */; };
 		4224331C191830DA00AF9488 /* BRHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4224331B191830DA00AF9488 /* BRHomeView.m */; };
+		42243323191840E500AF9488 /* HTTPCRUDOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 42243322191840E500AF9488 /* HTTPCRUDOperation.m */; };
 		426AF6BB1917F1B1006DC6D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BA1917F1B1006DC6D3 /* Security.framework */; };
 		426AF6BD1917F1B9006DC6D3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */; };
 		42A542361917E33500D34B1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542351917E33500D34B1D /* Foundation.framework */; };
@@ -172,6 +173,10 @@
 		422433181918124800AF9488 /* GTLFramework.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLFramework.m; sourceTree = "<group>"; };
 		4224331A191830DA00AF9488 /* BRHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRHomeView.h; sourceTree = "<group>"; };
 		4224331B191830DA00AF9488 /* BRHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRHomeView.m; sourceTree = "<group>"; };
+		4224331F191840E500AF9488 /* HTTPCRUDDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPCRUDDefinitions.h; sourceTree = "<group>"; };
+		42243320191840E500AF9488 /* HTTPCRUDInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPCRUDInterfaces.h; sourceTree = "<group>"; };
+		42243321191840E500AF9488 /* HTTPCRUDOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPCRUDOperation.h; sourceTree = "<group>"; };
+		42243322191840E500AF9488 /* HTTPCRUDOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPCRUDOperation.m; sourceTree = "<group>"; };
 		426AF6BA1917F1B1006DC6D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		42A542321917E33500D34B1D /* Book Room.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Book Room.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -365,6 +370,13 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		4224331E191840D900AF9488 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
 		42A542291917E33400D34B1D = {
 			isa = PBXGroup;
 			children = (
@@ -471,6 +483,10 @@
 		42A5426D1917E35B00D34B1D /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4224331F191840E500AF9488 /* HTTPCRUDDefinitions.h */,
+				42243320191840E500AF9488 /* HTTPCRUDInterfaces.h */,
+				42243321191840E500AF9488 /* HTTPCRUDOperation.h */,
+				42243322191840E500AF9488 /* HTTPCRUDOperation.m */,
 				4224328C19180F2400AF9488 /* Google */,
 			);
 			name = Libraries;
@@ -487,6 +503,7 @@
 		42A5426F1917E36700D34B1D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				4224331E191840D900AF9488 /* Networking */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -619,6 +636,7 @@
 				4224330A191811E600AF9488 /* GTMHTTPFetcherService.m in Sources */,
 				422432DD1918109700AF9488 /* GTLCalendarError.m in Sources */,
 				422432E71918109700AF9488 /* GTLCalendarNotification.m in Sources */,
+				42243323191840E500AF9488 /* HTTPCRUDOperation.m in Sources */,
 				422432D71918109700AF9488 /* GTLCalendarCalendarList.m in Sources */,
 				422432E91918109700AF9488 /* GTLCalendarSettings.m in Sources */,
 				422432D51918109700AF9488 /* GTLCalendarAclRule.m in Sources */,
