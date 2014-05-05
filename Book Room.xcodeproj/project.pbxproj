@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		426AF6BB1917F1B1006DC6D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BA1917F1B1006DC6D3 /* Security.framework */; };
+		426AF6BD1917F1B9006DC6D3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */; };
 		42A542361917E33500D34B1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542351917E33500D34B1D /* Foundation.framework */; };
 		42A542381917E33500D34B1D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542371917E33500D34B1D /* CoreGraphics.framework */; };
 		42A5423A1917E33500D34B1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542391917E33500D34B1D /* UIKit.framework */; };
@@ -14,7 +16,7 @@
 		42A542421917E33500D34B1D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A542411917E33500D34B1D /* main.m */; };
 		42A542461917E33500D34B1D /* BRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A542451917E33500D34B1D /* BRAppDelegate.m */; };
 		42A542491917E33500D34B1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42A542471917E33500D34B1D /* Main.storyboard */; };
-		42A5424C1917E33500D34B1D /* BRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A5424B1917E33500D34B1D /* BRViewController.m */; };
+		42A5424C1917E33500D34B1D /* BRHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A5424B1917E33500D34B1D /* BRHomeViewController.m */; };
 		42A5424E1917E33500D34B1D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42A5424D1917E33500D34B1D /* Images.xcassets */; };
 		42A542551917E33500D34B1D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542541917E33500D34B1D /* XCTest.framework */; };
 		42A542561917E33500D34B1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542351917E33500D34B1D /* Foundation.framework */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		426AF6BA1917F1B1006DC6D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		42A542321917E33500D34B1D /* Book Room.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Book Room.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A542351917E33500D34B1D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42A542371917E33500D34B1D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -45,8 +49,8 @@
 		42A542441917E33500D34B1D /* BRAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRAppDelegate.h; sourceTree = "<group>"; };
 		42A542451917E33500D34B1D /* BRAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRAppDelegate.m; sourceTree = "<group>"; };
 		42A542481917E33500D34B1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		42A5424A1917E33500D34B1D /* BRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRViewController.h; sourceTree = "<group>"; };
-		42A5424B1917E33500D34B1D /* BRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRViewController.m; sourceTree = "<group>"; };
+		42A5424A1917E33500D34B1D /* BRHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRHomeViewController.h; sourceTree = "<group>"; };
+		42A5424B1917E33500D34B1D /* BRHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRHomeViewController.m; sourceTree = "<group>"; };
 		42A5424D1917E33500D34B1D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		42A542531917E33500D34B1D /* Book RoomTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Book RoomTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A542541917E33500D34B1D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -60,6 +64,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				426AF6BD1917F1B9006DC6D3 /* SystemConfiguration.framework in Frameworks */,
+				426AF6BB1917F1B1006DC6D3 /* Security.framework in Frameworks */,
 				42A542381917E33500D34B1D /* CoreGraphics.framework in Frameworks */,
 				42A5423A1917E33500D34B1D /* UIKit.framework in Frameworks */,
 				42A542361917E33500D34B1D /* Foundation.framework in Frameworks */,
@@ -101,6 +107,8 @@
 		42A542341917E33500D34B1D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */,
+				426AF6BA1917F1B1006DC6D3 /* Security.framework */,
 				42A542351917E33500D34B1D /* Foundation.framework */,
 				42A542371917E33500D34B1D /* CoreGraphics.framework */,
 				42A542391917E33500D34B1D /* UIKit.framework */,
@@ -112,12 +120,14 @@
 		42A5423B1917E33500D34B1D /* Book Room */ = {
 			isa = PBXGroup;
 			children = (
+				42A5426F1917E36700D34B1D /* Helpers */,
+				42A5426D1917E35B00D34B1D /* Libraries */,
+				42A5426E1917E35F00D34B1D /* Images */,
+				42A5426C1917E35100D34B1D /* Models */,
+				42A5426B1917E34C00D34B1D /* Views */,
+				42A5426A1917E34200D34B1D /* Controllers */,
 				42A542441917E33500D34B1D /* BRAppDelegate.h */,
 				42A542451917E33500D34B1D /* BRAppDelegate.m */,
-				42A542471917E33500D34B1D /* Main.storyboard */,
-				42A5424A1917E33500D34B1D /* BRViewController.h */,
-				42A5424B1917E33500D34B1D /* BRViewController.m */,
-				42A5424D1917E33500D34B1D /* Images.xcassets */,
 				42A5423C1917E33500D34B1D /* Supporting Files */,
 			);
 			path = "Book Room";
@@ -150,6 +160,52 @@
 				42A5425D1917E33500D34B1D /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		42A5426A1917E34200D34B1D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				42A5424A1917E33500D34B1D /* BRHomeViewController.h */,
+				42A5424B1917E33500D34B1D /* BRHomeViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		42A5426B1917E34C00D34B1D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				42A542471917E33500D34B1D /* Main.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		42A5426C1917E35100D34B1D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		42A5426D1917E35B00D34B1D /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		42A5426E1917E35F00D34B1D /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				42A5424D1917E33500D34B1D /* Images.xcassets */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		42A5426F1917E36700D34B1D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,7 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42A5424C1917E33500D34B1D /* BRViewController.m in Sources */,
+				42A5424C1917E33500D34B1D /* BRHomeViewController.m in Sources */,
 				42A542461917E33500D34B1D /* BRAppDelegate.m in Sources */,
 				42A542421917E33500D34B1D /* main.m in Sources */,
 			);
@@ -457,6 +513,7 @@
 				42A542661917E33500D34B1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		42A542671917E33500D34B1D /* Build configuration list for PBXNativeTarget "Book RoomTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +522,7 @@
 				42A542691917E33500D34B1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
