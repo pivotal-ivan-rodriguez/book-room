@@ -17,6 +17,7 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 @interface BRHomeViewController () <BRHomeViewDelegate>
 
 @property (nonatomic, strong) GTLServiceCalendar *calendarService;
+@property (nonatomic, strong) GTLCalendarCalendarListEntry *userCalendar;
 
 @end
 
@@ -84,13 +85,44 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
     GTLQueryCalendar *query = [GTLQueryCalendar queryForCalendarListList];
 
     [self.calendarService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id object, NSError *error) {
-        if (!error) {
-            NSLog(@"response %@ - %@",object,[object class]);
+        if (!error && [object isKindOfClass:[GTLCalendarCalendarList class]]) {
+            for (GTLCalendarCalendarListEntry *calendarEntry in ((GTLCalendarCalendarList *)object).items) {
+                if ([calendarEntry.primary boolValue]) {
+                    self.userCalendar = calendarEntry;
+                    break;
+                }
+            }
+
         } else {
             NSLog(@"Request failed %@",error);
         }
     }];
 }
 
+#pragma mark -
+#pragma mark BRHomeViewDelegate Methods
+
+- (void)createEventWithTitle:(NSString *)title {
+    GTLCalendarEvent *calEvent = [GTLCalendarEvent object];
+    calEvent.summary = title;
+    GTLCalendarEventDateTime *start = [GTLCalendarEventDateTime object];
+    GTLCalendarEventDateTime *end = [GTLCalendarEventDateTime object];
+    NSDate *now = [NSDate date];
+    start.dateTime = [GTLDateTime dateTimeWithDate:now timeZone:[NSTimeZone systemTimeZone]];
+    end.dateTime = [GTLDateTime dateTimeWithDate:[now dateByAddingTimeInterval:60*60] timeZone:[NSTimeZone systemTimeZone]];
+    calEvent.start = start;
+    calEvent.end = end;
+
+    GTLQueryCalendar *query = [GTLQueryCalendar queryForEventsInsertWithObject:calEvent calendarId:self.userCalendar.identifier];
+    [self.calendarService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id object, NSError *error) {
+        if (!error) {
+            NSLog(@"response %@",object);
+
+        } else {
+            NSLog(@"Request failed %@",error);
+        }
+    }];
+
+}
 
 @end
