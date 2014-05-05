@@ -14,7 +14,7 @@ static NSString * const kKeychainItemName = @"Book a Room";
 static NSString * const kClientID = @"776916698629-jm882d2nnh738lo5qio3quqehej4i4a3.apps.googleusercontent.com";
 static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 
-@interface BRHomeViewController ()
+@interface BRHomeViewController () <BRHomeViewDelegate>
 
 @property (nonatomic, strong) GTLServiceCalendar *calendarService;
 
@@ -40,6 +40,9 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.view.delegate = self;
+    [self.view configureSubViews];
 
     GTMOAuth2Authentication *auth = [GTMOAuth2ViewControllerTouch authForGoogleFromKeychainForName:kKeychainItemName clientID:kClientID clientSecret:kClientSecret];
     if ([auth canAuthorize]) {

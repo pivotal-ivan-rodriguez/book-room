@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BRHomeView.h"
 
 @interface BRHomeViewController : UIViewController
+
+@property (nonatomic, strong) BRHomeView *view;
 
 @end

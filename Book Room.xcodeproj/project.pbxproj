@@ -51,6 +51,7 @@
 		422433131918120F00AF9488 /* GTLBatchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 422433121918120F00AF9488 /* GTLBatchResult.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		422433161918121D00AF9488 /* GTLErrorObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 422433151918121D00AF9488 /* GTLErrorObject.m */; };
 		422433191918124800AF9488 /* GTLFramework.m in Sources */ = {isa = PBXBuildFile; fileRef = 422433181918124800AF9488 /* GTLFramework.m */; };
+		4224331C191830DA00AF9488 /* BRHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4224331B191830DA00AF9488 /* BRHomeView.m */; };
 		426AF6BB1917F1B1006DC6D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BA1917F1B1006DC6D3 /* Security.framework */; };
 		426AF6BD1917F1B9006DC6D3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */; };
 		42A542361917E33500D34B1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542351917E33500D34B1D /* Foundation.framework */; };
@@ -169,6 +170,8 @@
 		422433151918121D00AF9488 /* GTLErrorObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLErrorObject.m; sourceTree = "<group>"; };
 		422433171918124800AF9488 /* GTLFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLFramework.h; sourceTree = "<group>"; };
 		422433181918124800AF9488 /* GTLFramework.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLFramework.m; sourceTree = "<group>"; };
+		4224331A191830DA00AF9488 /* BRHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRHomeView.h; sourceTree = "<group>"; };
+		4224331B191830DA00AF9488 /* BRHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRHomeView.m; sourceTree = "<group>"; };
 		426AF6BA1917F1B1006DC6D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		42A542321917E33500D34B1D /* Book Room.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Book Room.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -452,6 +455,8 @@
 			isa = PBXGroup;
 			children = (
 				42A542471917E33500D34B1D /* Main.storyboard */,
+				4224331A191830DA00AF9488 /* BRHomeView.h */,
+				4224331B191830DA00AF9488 /* BRHomeView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -606,6 +611,7 @@
 				422433131918120F00AF9488 /* GTLBatchResult.m in Sources */,
 				422432EA1918109700AF9488 /* GTLCalendarTimePeriod.m in Sources */,
 				4224329D19180F9400AF9488 /* GTMHTTPFetcher.m in Sources */,
+				4224331C191830DA00AF9488 /* BRHomeView.m in Sources */,
 				42A5424C1917E33500D34B1D /* BRHomeViewController.m in Sources */,
 				422432E41918109700AF9488 /* GTLCalendarFreeBusyGroup.m in Sources */,
 				422432DA1918109700AF9488 /* GTLCalendarColorDefinition.m in Sources */,
