@@ -16,6 +16,7 @@ extern NSString * const kGooglePropertiesKey;
 extern NSString * const kGoogleNameKey;
 extern NSString * const kGoogleValueKey;
 extern NSString * const kGoogleResourceNameKey;
+extern NSString * const kGoogleResourceEmailkey;
 
 extern NSString * const kModalMeetingRoomsCollectionViewControllerSegue;
 

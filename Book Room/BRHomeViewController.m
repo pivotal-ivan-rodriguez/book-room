@@ -22,6 +22,7 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 @property (nonatomic, strong) GTLCalendarCalendarListEntry *userCalendar;
 @property (nonatomic, strong) NSArray *meetingRooms;
 @property (nonatomic, weak) BRMeetingRoomsCollectionViewController *meetingRoomsViewController;
+@property (nonatomic, strong) NSDictionary *meetingRoom;
 
 @end
 
@@ -153,15 +154,22 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 #pragma mark BRHomeViewDelegate Methods
 
 - (void)createEventWithTitle:(NSString *)title {
-    GTLCalendarEvent *calEvent = [GTLCalendarEvent object];
-    calEvent.summary = title;
+
     GTLCalendarEventDateTime *start = [GTLCalendarEventDateTime object];
     GTLCalendarEventDateTime *end = [GTLCalendarEventDateTime object];
     NSDate *now = [NSDate date];
     start.dateTime = [GTLDateTime dateTimeWithDate:now timeZone:[NSTimeZone systemTimeZone]];
     end.dateTime = [GTLDateTime dateTimeWithDate:[now dateByAddingTimeInterval:60*60] timeZone:[NSTimeZone systemTimeZone]];
+
+    GTLCalendarEventAttendee *room = [GTLCalendarEventAttendee object];
+    room.displayName = self.meetingRoom[kGoogleResourceEmailkey];
+    room.email = self.meetingRoom[kGoogleResourceEmailkey];
+
+    GTLCalendarEvent *calEvent = [GTLCalendarEvent object];
+    calEvent.summary = title;
     calEvent.start = start;
     calEvent.end = end;
+    calEvent.attendees = @[room];
 
     GTLQueryCalendar *query = [GTLQueryCalendar queryForEventsInsertWithObject:calEvent calendarId:self.userCalendar.identifier];
     [self.calendarService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id object, NSError *error) {
@@ -187,6 +195,7 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 
 - (void)didSelectMeetingRoom:(NSDictionary *)meetingRoom {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    self.meetingRoom = meetingRoom;
 }
 
 @end

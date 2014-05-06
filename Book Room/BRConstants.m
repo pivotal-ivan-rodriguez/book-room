@@ -16,6 +16,7 @@ NSString * const kGooglePropertiesKey = @"apps:property";
 NSString * const kGoogleNameKey = @"name";
 NSString * const kGoogleValueKey = @"value";
 NSString * const kGoogleResourceNameKey = @"resourceCommonName";
+NSString * const kGoogleResourceEmailkey = @"resourceEmail";
 
 NSString * const kModalMeetingRoomsCollectionViewControllerSegue = @"modalMeetingRoomsCollectionViewControllerSegue";
 
