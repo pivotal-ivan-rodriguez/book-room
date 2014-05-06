@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Home View Controller-->
+        <!--Home View Controller - Create Meetings-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="BRHomeViewController" sceneMemberID="viewController">
@@ -33,18 +33,89 @@
                                     <action selector="createEventButtonTapped:" destination="kh9-bI-dsS" eventType="touchUpInside" id="Shr-Nb-Bgi"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9du-hw-dcg">
+                                <rect key="frame" x="29" y="249" width="263" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Set Room">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="meetingRoomButtonTapped:" destination="kh9-bI-dsS" eventType="touchUpInside" id="9gg-1z-wBW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <connections>
                             <outlet property="createEventButton" destination="aag-Gs-0RF" id="9nB-pq-bsb"/>
                             <outlet property="eventTitleTextField" destination="yHd-0g-OIy" id="bon-bX-YUW"/>
+                            <outlet property="meetingRoomButton" destination="9du-hw-dcg" id="eVy-5Y-SxH"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="RbK-t2-PFT"/>
+                    <navigationItem key="navigationItem" title="Create Meetings" id="RbK-t2-PFT"/>
+                    <connections>
+                        <segue destination="yan-CE-o5c" kind="modal" identifier="modalMeetingRoomsCollectionViewControllerSegue" id="9dM-u1-Ewg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1160" y="338"/>
+        </scene>
+        <!--Meeting Rooms Collection View Controller - Meeting Rooms-->
+        <scene sceneID="riL-dT-lj4">
+            <objects>
+                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="OSv-pJ-p0p" customClass="BRMeetingRoomsCollectionViewController" sceneMemberID="viewController">
+                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="udB-Va-eCA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ve7-Mh-Tku">
+                            <size key="itemSize" width="320" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="AQr-lb-Qm9">
+                                <rect key="frame" x="0.0" y="64" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="OSv-pJ-p0p" id="aQJ-Ct-Qee"/>
+                            <outlet property="delegate" destination="OSv-pJ-p0p" id="C3w-Qt-YET"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Meeting Rooms" id="dFk-0S-mKE">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="Gek-3c-rtx">
+                            <connections>
+                                <action selector="closeButtonTapped:" destination="OSv-pJ-p0p" id="7pt-fP-haa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="raH-Nn-bN0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1969" y="338"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1EJ-Xz-wsq">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="yan-CE-o5c" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vqf-3B-uwC">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="OSv-pJ-p0p" kind="relationship" relationship="rootViewController" id="ZXr-2i-6YW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IO7-Ad-iZq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1585" y="338"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="YJc-VQ-SJ3">

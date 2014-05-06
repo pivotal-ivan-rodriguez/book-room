@@ -21,6 +21,7 @@
 #import "HTTPCRUDDefinitions.h"
 
 @class HTTPCRUDOperation;
+@class GTMOAuth2Authentication;
 typedef void (^HTTPCRUDOperationCompletionBlock)(__weak HTTPCRUDOperation *HTTPCRUDOperation);
 
 @interface HTTPCRUDOperation : NSOperation
@@ -46,6 +47,8 @@ typedef void (^HTTPCRUDOperationCompletionBlock)(__weak HTTPCRUDOperation *HTTPC
 + (NSOperationQueue *)networkingQueue;
 + (NSURL *)baseURL;
 + (void)setBaseURL:(NSURL *)baseURL;
++ (GTMOAuth2Authentication *)googleAuth;
++ (void)setGoogleAuth:(GTMOAuth2Authentication *)newGoogleAuth;
 
 - (void)configureForData:(id)collection;
 - (void)success;

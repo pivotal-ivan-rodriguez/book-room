@@ -53,8 +53,10 @@
 		422433191918124800AF9488 /* GTLFramework.m in Sources */ = {isa = PBXBuildFile; fileRef = 422433181918124800AF9488 /* GTLFramework.m */; };
 		4224331C191830DA00AF9488 /* BRHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4224331B191830DA00AF9488 /* BRHomeView.m */; };
 		42243323191840E500AF9488 /* HTTPCRUDOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 42243322191840E500AF9488 /* HTTPCRUDOperation.m */; };
+		4224332619191D2500AF9488 /* BRCalendarResourcesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4224332519191D2500AF9488 /* BRCalendarResourcesOperation.m */; };
 		426AF6BB1917F1B1006DC6D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BA1917F1B1006DC6D3 /* Security.framework */; };
 		426AF6BD1917F1B9006DC6D3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */; };
+		4271362E191951C3004A8487 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4271362D191951C3004A8487 /* XMLReader.m */; };
 		42A542361917E33500D34B1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542351917E33500D34B1D /* Foundation.framework */; };
 		42A542381917E33500D34B1D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542371917E33500D34B1D /* CoreGraphics.framework */; };
 		42A5423A1917E33500D34B1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542391917E33500D34B1D /* UIKit.framework */; };
@@ -69,6 +71,10 @@
 		42A542571917E33500D34B1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542391917E33500D34B1D /* UIKit.framework */; };
 		42A5425F1917E33500D34B1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42A5425D1917E33500D34B1D /* InfoPlist.strings */; };
 		42A542611917E33500D34B1D /* Book_RoomTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A542601917E33500D34B1D /* Book_RoomTests.m */; };
+		42F38A31191956D500022C21 /* BRConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F38A30191956D500022C21 /* BRConstants.m */; };
+		42F38A341919601700022C21 /* BRMeetingRoomsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F38A331919601700022C21 /* BRMeetingRoomsCollectionViewController.m */; };
+		42F38A371919633F00022C21 /* BRMeetingRoomsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F38A361919633F00022C21 /* BRMeetingRoomsCollectionViewCell.m */; };
+		42F38A391919635700022C21 /* BRMeetingRoomsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F38A381919635700022C21 /* BRMeetingRoomsCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,8 +183,12 @@
 		42243320191840E500AF9488 /* HTTPCRUDInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPCRUDInterfaces.h; sourceTree = "<group>"; };
 		42243321191840E500AF9488 /* HTTPCRUDOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPCRUDOperation.h; sourceTree = "<group>"; };
 		42243322191840E500AF9488 /* HTTPCRUDOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPCRUDOperation.m; sourceTree = "<group>"; };
+		4224332419191D2500AF9488 /* BRCalendarResourcesOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRCalendarResourcesOperation.h; sourceTree = "<group>"; };
+		4224332519191D2500AF9488 /* BRCalendarResourcesOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRCalendarResourcesOperation.m; sourceTree = "<group>"; };
 		426AF6BA1917F1B1006DC6D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4271362C191951C3004A8487 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		4271362D191951C3004A8487 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		42A542321917E33500D34B1D /* Book Room.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Book Room.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A542351917E33500D34B1D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42A542371917E33500D34B1D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -198,6 +208,13 @@
 		42A5425C1917E33500D34B1D /* Book RoomTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Book RoomTests-Info.plist"; sourceTree = "<group>"; };
 		42A5425E1917E33500D34B1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		42A542601917E33500D34B1D /* Book_RoomTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Book_RoomTests.m; sourceTree = "<group>"; };
+		42F38A2F191956D500022C21 /* BRConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRConstants.h; sourceTree = "<group>"; };
+		42F38A30191956D500022C21 /* BRConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRConstants.m; sourceTree = "<group>"; };
+		42F38A321919601700022C21 /* BRMeetingRoomsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRMeetingRoomsCollectionViewController.h; sourceTree = "<group>"; };
+		42F38A331919601700022C21 /* BRMeetingRoomsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRMeetingRoomsCollectionViewController.m; sourceTree = "<group>"; };
+		42F38A351919633F00022C21 /* BRMeetingRoomsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRMeetingRoomsCollectionViewCell.h; sourceTree = "<group>"; };
+		42F38A361919633F00022C21 /* BRMeetingRoomsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRMeetingRoomsCollectionViewCell.m; sourceTree = "<group>"; };
+		42F38A381919635700022C21 /* BRMeetingRoomsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BRMeetingRoomsCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -373,8 +390,23 @@
 		4224331E191840D900AF9488 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				4224331F191840E500AF9488 /* HTTPCRUDDefinitions.h */,
+				42243320191840E500AF9488 /* HTTPCRUDInterfaces.h */,
+				42243321191840E500AF9488 /* HTTPCRUDOperation.h */,
+				42243322191840E500AF9488 /* HTTPCRUDOperation.m */,
+				4224332419191D2500AF9488 /* BRCalendarResourcesOperation.h */,
+				4224332519191D2500AF9488 /* BRCalendarResourcesOperation.m */,
 			);
 			name = Networking;
+			sourceTree = "<group>";
+		};
+		4271362B191951B3004A8487 /* XML */ = {
+			isa = PBXGroup;
+			children = (
+				4271362C191951C3004A8487 /* XMLReader.h */,
+				4271362D191951C3004A8487 /* XMLReader.m */,
+			);
+			name = XML;
 			sourceTree = "<group>";
 		};
 		42A542291917E33400D34B1D = {
@@ -459,6 +491,8 @@
 			children = (
 				42A5424A1917E33500D34B1D /* BRHomeViewController.h */,
 				42A5424B1917E33500D34B1D /* BRHomeViewController.m */,
+				42F38A321919601700022C21 /* BRMeetingRoomsCollectionViewController.h */,
+				42F38A331919601700022C21 /* BRMeetingRoomsCollectionViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -469,6 +503,9 @@
 				42A542471917E33500D34B1D /* Main.storyboard */,
 				4224331A191830DA00AF9488 /* BRHomeView.h */,
 				4224331B191830DA00AF9488 /* BRHomeView.m */,
+				42F38A351919633F00022C21 /* BRMeetingRoomsCollectionViewCell.h */,
+				42F38A361919633F00022C21 /* BRMeetingRoomsCollectionViewCell.m */,
+				42F38A381919635700022C21 /* BRMeetingRoomsCollectionViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -483,10 +520,6 @@
 		42A5426D1917E35B00D34B1D /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				4224331F191840E500AF9488 /* HTTPCRUDDefinitions.h */,
-				42243320191840E500AF9488 /* HTTPCRUDInterfaces.h */,
-				42243321191840E500AF9488 /* HTTPCRUDOperation.h */,
-				42243322191840E500AF9488 /* HTTPCRUDOperation.m */,
 				4224328C19180F2400AF9488 /* Google */,
 			);
 			name = Libraries;
@@ -503,7 +536,10 @@
 		42A5426F1917E36700D34B1D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				4271362B191951B3004A8487 /* XML */,
 				4224331E191840D900AF9488 /* Networking */,
+				42F38A2F191956D500022C21 /* BRConstants.h */,
+				42F38A30191956D500022C21 /* BRConstants.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -585,6 +621,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42F38A391919635700022C21 /* BRMeetingRoomsCollectionViewCell.xib in Resources */,
 				4224329919180F4800AF9488 /* GTMOAuth2ViewTouch.xib in Resources */,
 				42A5424E1917E33500D34B1D /* Images.xcassets in Resources */,
 				42A542401917E33500D34B1D /* InfoPlist.strings in Resources */,
@@ -610,12 +647,14 @@
 				422432F0191810BC00AF9488 /* GTLObject.m in Sources */,
 				422432E31918109700AF9488 /* GTLCalendarFreeBusyCalendar.m in Sources */,
 				422432E61918109700AF9488 /* GTLCalendarFreeBusyResponse.m in Sources */,
+				42F38A341919601700022C21 /* BRMeetingRoomsCollectionViewController.m in Sources */,
 				422433011918116C00AF9488 /* GTLQuery.m in Sources */,
 				422432D61918109700AF9488 /* GTLCalendarCalendar.m in Sources */,
 				42243307191811B500AF9488 /* GTLService.m in Sources */,
 				422432DB1918109700AF9488 /* GTLCalendarColors.m in Sources */,
 				422433161918121D00AF9488 /* GTLErrorObject.m in Sources */,
 				422433191918124800AF9488 /* GTLFramework.m in Sources */,
+				42F38A31191956D500022C21 /* BRConstants.m in Sources */,
 				422432EC1918109700AF9488 /* GTLServiceCalendar.m in Sources */,
 				422432EB1918109700AF9488 /* GTLQueryCalendar.m in Sources */,
 				422432D91918109700AF9488 /* GTLCalendarChannel.m in Sources */,
@@ -627,7 +666,9 @@
 				422432E51918109700AF9488 /* GTLCalendarFreeBusyRequestItem.m in Sources */,
 				422433131918120F00AF9488 /* GTLBatchResult.m in Sources */,
 				422432EA1918109700AF9488 /* GTLCalendarTimePeriod.m in Sources */,
+				4224332619191D2500AF9488 /* BRCalendarResourcesOperation.m in Sources */,
 				4224329D19180F9400AF9488 /* GTMHTTPFetcher.m in Sources */,
+				42F38A371919633F00022C21 /* BRMeetingRoomsCollectionViewCell.m in Sources */,
 				4224331C191830DA00AF9488 /* BRHomeView.m in Sources */,
 				42A5424C1917E33500D34B1D /* BRHomeViewController.m in Sources */,
 				422432E41918109700AF9488 /* GTLCalendarFreeBusyGroup.m in Sources */,
@@ -638,6 +679,7 @@
 				422432E71918109700AF9488 /* GTLCalendarNotification.m in Sources */,
 				42243323191840E500AF9488 /* HTTPCRUDOperation.m in Sources */,
 				422432D71918109700AF9488 /* GTLCalendarCalendarList.m in Sources */,
+				4271362E191951C3004A8487 /* XMLReader.m in Sources */,
 				422432E91918109700AF9488 /* GTLCalendarSettings.m in Sources */,
 				422432D51918109700AF9488 /* GTLCalendarAclRule.m in Sources */,
 				4224329319180F3A00AF9488 /* GTMOAuth2SignIn.m in Sources */,

@@ -9,15 +9,19 @@
 #import "BRHomeViewController.h"
 #import "GTMOAuth2ViewControllerTouch.h"
 #import "GTLCalendar.h"
+#import "BRCalendarResourcesOperation.h"
+#import "BRMeetingRoomsCollectionViewController.h"
 
 static NSString * const kKeychainItemName = @"Book a Room";
 static NSString * const kClientID = @"776916698629-jm882d2nnh738lo5qio3quqehej4i4a3.apps.googleusercontent.com";
 static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 
-@interface BRHomeViewController () <BRHomeViewDelegate>
+@interface BRHomeViewController () <BRHomeViewDelegate, BRMeetingRoomsCollectionViewControllerDelegate>
 
 @property (nonatomic, strong) GTLServiceCalendar *calendarService;
 @property (nonatomic, strong) GTLCalendarCalendarListEntry *userCalendar;
+@property (nonatomic, strong) NSArray *meetingRooms;
+@property (nonatomic, weak) BRMeetingRoomsCollectionViewController *meetingRoomsViewController;
 
 @end
 
@@ -36,7 +40,24 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 }
 
 #pragma mark -
+#pragma mark Setters
+
+- (void)setMeetingRooms:(NSArray *)meetingRooms {
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:kGoogleResourceNameKey ascending:YES];
+    _meetingRooms = [meetingRooms sortedArrayUsingDescriptors:@[descriptor]];
+}
+
+#pragma mark -
 #pragma mark Private Methods
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:kModalMeetingRoomsCollectionViewControllerSegue]) {
+        UINavigationController *navController = segue.destinationViewController;
+        self.meetingRoomsViewController = (BRMeetingRoomsCollectionViewController *)navController.topViewController;
+        self.meetingRoomsViewController.delegate = self;
+        self.meetingRoomsViewController.meetingRooms = self.meetingRooms;
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -71,12 +92,14 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 }
 
 - (void)showAuthLoginViewController {
-    GTMOAuth2ViewControllerTouch *authViewController = [[GTMOAuth2ViewControllerTouch alloc] initWithScope:kGTLAuthScopeCalendar clientID:kClientID clientSecret:kClientSecret keychainItemName:kKeychainItemName delegate:self finishedSelector:@selector(viewController:finishedWithAuth:error:)];
+    NSString *scope = [GTMOAuth2Authentication scopeWithStrings:kGTLAuthScopeCalendar,kGTLAuthScopeCalendarReadonly,@"https://apps-apis.google.com/a/feeds/calendar/resource/", nil];
+    GTMOAuth2ViewControllerTouch *authViewController = [[GTMOAuth2ViewControllerTouch alloc] initWithScope:scope clientID:kClientID clientSecret:kClientSecret keychainItemName:kKeychainItemName delegate:self finishedSelector:@selector(viewController:finishedWithAuth:error:)];
 
     [self.navigationController presentViewController:authViewController animated:YES completion:nil];
 }
 
 - (void)isAuthorizedWithAuthentication:(GTMOAuth2Authentication *)auth {
+    [HTTPCRUDOperation setGoogleAuth:auth];
     [self.calendarService setAuthorizer:auth];
     [self loadDriveFiles];
 }
@@ -89,6 +112,7 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
             for (GTLCalendarCalendarListEntry *calendarEntry in ((GTLCalendarCalendarList *)object).items) {
                 if ([calendarEntry.primary boolValue]) {
                     self.userCalendar = calendarEntry;
+                    [self getCalendarResources];
                     break;
                 }
             }
@@ -97,6 +121,32 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
             NSLog(@"Request failed %@",error);
         }
     }];
+}
+
+- (void)getCalendarResources {
+    BRCalendarResourcesOperation *operation = [BRCalendarResourcesOperation new];
+    operation.method = HTTPMethodGet;
+    __block NSMutableArray *meetingRooms = [NSMutableArray array];
+    [operation setCompletionBlock:^(HTTPCRUDOperation *__weak HTTPCRUDOperation) {
+        if (HTTPCRUDOperation.state == HTTPCRUDOperationSuccessfulState) {
+            NSArray *entries = HTTPCRUDOperation.returnedObject[kGoogleFeedKey][kGoogleEntryKey];
+            NSMutableDictionary *entryData;
+
+            for (NSDictionary *entry in entries) {
+                NSArray *dataEntries = entry[kGooglePropertiesKey];
+                entryData = [NSMutableDictionary dictionary];
+                for (NSDictionary *data in dataEntries) {
+                    if (data[kGoogleValueKey] && data[kGoogleNameKey]) {
+                        [entryData setObject:data[kGoogleValueKey] forKey:data[kGoogleNameKey]];
+                    }
+                }
+                if (entryData) [meetingRooms addObject:entryData];
+            }
+
+            self.meetingRooms = [meetingRooms copy];
+        }
+    }];
+    [[HTTPCRUDOperation networkingQueue] addOperation:operation];
 }
 
 #pragma mark -
@@ -122,7 +172,21 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
             NSLog(@"Request failed %@",error);
         }
     }];
+}
 
+- (void)meetingRoomButtonTapped {
+    [self performSegueWithIdentifier:kModalMeetingRoomsCollectionViewControllerSegue sender:self];
+}
+
+#pragma mark -
+#pragma mark BRMeetingRoomsCollectionViewControllerDelegate Methods
+
+- (void)dismissViewController {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didSelectMeetingRoom:(NSDictionary *)meetingRoom {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

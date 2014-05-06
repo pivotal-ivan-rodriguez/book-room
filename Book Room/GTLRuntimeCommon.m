@@ -124,7 +124,7 @@ static NSString *const kJSONKey = @"jsonKey";
       id itemJSON = [self jsonFromAPIObject:item
                               expectedClass:expectedClass
                                 isCacheable:NULL];
-      [resultArray addObject:itemJSON];
+        if (itemJSON) [resultArray addObject:itemJSON];
     }
     result = resultArray;
   } else if ([obj isKindOfClass:[GTLDateTime class]]) {

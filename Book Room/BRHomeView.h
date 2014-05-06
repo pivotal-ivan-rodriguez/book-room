@@ -11,7 +11,7 @@
 @protocol BRHomeViewDelegate <NSObject>
 
 - (void)createEventWithTitle:(NSString *)title;
-
+- (void)meetingRoomButtonTapped;
 @end
 
 @interface BRHomeView : UIView

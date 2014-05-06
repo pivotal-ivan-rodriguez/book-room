@@ -17,6 +17,8 @@
 //
 
 #import "HTTPCRUDOperation.h"
+#import "GTMOAuth2ViewControllerTouch.h"
+#import "XMLReader.h"
 #import <CoreData/CoreData.h>
 #import <objc/runtime.h>
 
@@ -50,6 +52,15 @@ static NSURL *baseURL;
 
 + (void)setBaseURL:(NSURL *)newBaseURL {
     baseURL = newBaseURL;
+}
+
+static GTMOAuth2Authentication *googleAuth;
++ (GTMOAuth2Authentication *)googleAuth {
+    return googleAuth;
+}
+
++ (void)setGoogleAuth:(GTMOAuth2Authentication *)newGoogleAuth {
+    googleAuth = newGoogleAuth;
 }
 
 static NSOperationQueue *networkingQueue;
@@ -167,7 +178,6 @@ static NSOperationQueue *networkingQueue;
     }
     
     NSURL *requestURL = [self URLForPath:self.path withParameters:self.queryParameters];
-    NSLog(@"requesting %@", requestURL);
     NSString *appVersion = [NSString stringWithFormat:@"%@-%@",
                             [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"],
                             [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"]];
@@ -175,12 +185,21 @@ static NSOperationQueue *networkingQueue;
     NSMutableURLRequest *jsonRequest = [NSMutableURLRequest requestWithURL:requestURL];
     [jsonRequest setHTTPMethod:[self stringFromOperationMethod:self.method]];
     [jsonRequest setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [jsonRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    if (self.attachments) {
-        [jsonRequest setValue:@"multipart/form-data; boundary=Boundary+0xAbCdGbOuNdArY" forHTTPHeaderField:@"Content-Type"];
+
+    if (googleAuth) {
+        [googleAuth authorizeRequest:jsonRequest];
+        [jsonRequest setValue:@"application/atom+xml" forHTTPHeaderField:@"Accept"];
+        [jsonRequest setValue:@"application/atom+xml" forHTTPHeaderField:@"Content-Type"];
+        
     } else {
-        [jsonRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [jsonRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        if (self.attachments) {
+            [jsonRequest setValue:@"multipart/form-data; boundary=Boundary+0xAbCdGbOuNdArY" forHTTPHeaderField:@"Content-Type"];
+        } else {
+            [jsonRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        }
     }
+
     [jsonRequest setValue:appVersion forHTTPHeaderField:@"X-App-Version"];
     for (NSString *headerField in self.additionalHeaders) {
         [jsonRequest setValue:self.additionalHeaders[headerField] forHTTPHeaderField:headerField];
@@ -227,8 +246,15 @@ static NSOperationQueue *networkingQueue;
     }
     
     if (responseData.length > 0) {
-        id returnedObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:error];
-        self.returnedObject = NSCollectionRemoveNSNulls(&returnedObject);
+        if (googleAuth) {
+            NSError *parseError = nil;
+            id returnedObject = [XMLReader dictionaryForXMLData:responseData error:parseError];
+            self.returnedObject = NSCollectionRemoveNSNulls(&returnedObject);
+
+        } else {
+            id returnedObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:error];
+            self.returnedObject = NSCollectionRemoveNSNulls(&returnedObject);
+        }
     }
     if (connectionErrorString && !self.returnedObject[@"error"]) {
         self.returnedObject = @{@"error":connectionErrorString};
@@ -305,7 +331,6 @@ static NSOperationQueue *networkingQueue;
     self.networkActivityCount--;
     
     if (self.networkActivityCount < 0) {
-        NSLog(@"** Unbalanced calls to push/pop network activity **");
         self.networkActivityCount = 0;
     }
     

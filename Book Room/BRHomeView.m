@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *eventTitleTextField;
 @property (strong, nonatomic) IBOutlet UIButton *createEventButton;
+@property (strong, nonatomic) IBOutlet UIButton *meetingRoomButton;
 
 @end
 
@@ -42,6 +43,12 @@
     }
 }
 
+- (IBAction)meetingRoomButtonTapped:(UIButton *)sender {
+    if ([self.delegate conformsToProtocol:@protocol(BRHomeViewDelegate)]) {
+        [self.delegate meetingRoomButtonTapped];
+    }
+}
+
 #pragma mark -
 #pragma mark Public Methods
 
@@ -49,6 +56,10 @@
     self.createEventButton.layer.borderColor = [UIColor blackColor].CGColor;
     self.createEventButton.layer.borderWidth = 1;
     self.createEventButton.layer.cornerRadius = 5;
+
+    self.meetingRoomButton.layer.borderColor = [UIColor blackColor].CGColor;
+    self.meetingRoomButton.layer.borderWidth = 1;
+    self.meetingRoomButton.layer.cornerRadius = 5;
 }
 
 @end
