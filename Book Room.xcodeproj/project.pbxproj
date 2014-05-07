@@ -57,6 +57,7 @@
 		426AF6BB1917F1B1006DC6D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BA1917F1B1006DC6D3 /* Security.framework */; };
 		426AF6BD1917F1B9006DC6D3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */; };
 		4271362E191951C3004A8487 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4271362D191951C3004A8487 /* XMLReader.m */; };
+		4280EAEC191A72F100849382 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4280EAEB191A72F100849382 /* MBProgressHUD.m */; };
 		42A542361917E33500D34B1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542351917E33500D34B1D /* Foundation.framework */; };
 		42A542381917E33500D34B1D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542371917E33500D34B1D /* CoreGraphics.framework */; };
 		42A5423A1917E33500D34B1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542391917E33500D34B1D /* UIKit.framework */; };
@@ -189,6 +190,8 @@
 		426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4271362C191951C3004A8487 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
 		4271362D191951C3004A8487 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
+		4280EAEA191A72F100849382 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		4280EAEB191A72F100849382 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		42A542321917E33500D34B1D /* Book Room.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Book Room.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A542351917E33500D34B1D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42A542371917E33500D34B1D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -409,6 +412,15 @@
 			name = XML;
 			sourceTree = "<group>";
 		};
+		4280EAE9191A72E900849382 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				4280EAEA191A72F100849382 /* MBProgressHUD.h */,
+				4280EAEB191A72F100849382 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		42A542291917E33400D34B1D = {
 			isa = PBXGroup;
 			children = (
@@ -520,6 +532,7 @@
 		42A5426D1917E35B00D34B1D /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4280EAE9191A72E900849382 /* MBProgressHUD */,
 				4224328C19180F2400AF9488 /* Google */,
 			);
 			name = Libraries;
@@ -657,6 +670,7 @@
 				42F38A31191956D500022C21 /* BRConstants.m in Sources */,
 				422432EC1918109700AF9488 /* GTLServiceCalendar.m in Sources */,
 				422432EB1918109700AF9488 /* GTLQueryCalendar.m in Sources */,
+				4280EAEC191A72F100849382 /* MBProgressHUD.m in Sources */,
 				422432D91918109700AF9488 /* GTLCalendarChannel.m in Sources */,
 				422432D81918109700AF9488 /* GTLCalendarCalendarListEntry.m in Sources */,
 				422432E01918109700AF9488 /* GTLCalendarEventDateTime.m in Sources */,

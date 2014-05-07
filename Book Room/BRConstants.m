@@ -17,6 +17,8 @@ NSString * const kGoogleNameKey = @"name";
 NSString * const kGoogleValueKey = @"value";
 NSString * const kGoogleResourceNameKey = @"resourceCommonName";
 NSString * const kGoogleResourceEmailkey = @"resourceEmail";
+NSString * const kGoogleFreeBusyResponseBusykey = @"busy";
+NSString * const kGoogleFreeBusyResponseErrorkey = @"errors";
 
 NSString * const kModalMeetingRoomsCollectionViewControllerSegue = @"modalMeetingRoomsCollectionViewControllerSegue";
 

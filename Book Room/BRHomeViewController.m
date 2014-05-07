@@ -55,8 +55,12 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
     if ([segue.identifier isEqualToString:kModalMeetingRoomsCollectionViewControllerSegue]) {
         UINavigationController *navController = segue.destinationViewController;
         self.meetingRoomsViewController = (BRMeetingRoomsCollectionViewController *)navController.topViewController;
+        self.meetingRoomsViewController.calendarService = self.calendarService;
         self.meetingRoomsViewController.delegate = self;
         self.meetingRoomsViewController.meetingRooms = self.meetingRooms;
+        NSDate *now = [NSDate date];
+        self.meetingRoomsViewController.minDate = [now dateByAddingTimeInterval:4*60*60];;
+        self.meetingRoomsViewController.maxDate = [now dateByAddingTimeInterval:5*60*60];
     }
 }
 
@@ -162,7 +166,7 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
     end.dateTime = [GTLDateTime dateTimeWithDate:[now dateByAddingTimeInterval:60*60] timeZone:[NSTimeZone systemTimeZone]];
 
     GTLCalendarEventAttendee *room = [GTLCalendarEventAttendee object];
-    room.displayName = self.meetingRoom[kGoogleResourceEmailkey];
+    room.displayName = self.meetingRoom[kGoogleResourceNameKey];
     room.email = self.meetingRoom[kGoogleResourceEmailkey];
 
     GTLCalendarEvent *calEvent = [GTLCalendarEvent object];
@@ -170,6 +174,7 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
     calEvent.start = start;
     calEvent.end = end;
     calEvent.attendees = @[room];
+    calEvent.location = self.meetingRoom[kGoogleResourceNameKey];
 
     GTLQueryCalendar *query = [GTLQueryCalendar queryForEventsInsertWithObject:calEvent calendarId:self.userCalendar.identifier];
     [self.calendarService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id object, NSError *error) {

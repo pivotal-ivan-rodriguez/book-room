@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class GTLServiceCalendar;
+
 @protocol BRMeetingRoomsCollectionViewControllerDelegate <NSObject>
 
 - (void)dismissViewController;
@@ -19,4 +21,8 @@
 
 @property (nonatomic, weak) id<BRMeetingRoomsCollectionViewControllerDelegate>delegate;
 @property (nonatomic, strong) NSArray *meetingRooms;
+@property (nonatomic, strong) GTLServiceCalendar *calendarService;
+@property (nonatomic, strong) NSDate *minDate;
+@property (nonatomic, strong) NSDate *maxDate;
+
 @end
