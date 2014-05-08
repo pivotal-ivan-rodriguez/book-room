@@ -35,4 +35,8 @@
     self.meetingRoomNameLabel.text = room[kGoogleResourceNameKey];
 }
 
+- (void)configureForNoMeetingRooms {
+    self.meetingRoomNameLabel.text = kNoMeetingRoomsText;
+}
+
 @end

@@ -72,6 +72,9 @@
 		42A542571917E33500D34B1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A542391917E33500D34B1D /* UIKit.framework */; };
 		42A5425F1917E33500D34B1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42A5425D1917E33500D34B1D /* InfoPlist.strings */; };
 		42A542611917E33500D34B1D /* Book_RoomTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A542601917E33500D34B1D /* Book_RoomTests.m */; };
+		42D7DBFC191AA6A500856FC8 /* BRContactSearchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D7DBFB191AA6A500856FC8 /* BRContactSearchOperation.m */; };
+		42D7DBFF191BF71F00856FC8 /* BRContactListViewControllerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D7DBFE191BF71F00856FC8 /* BRContactListViewControllerCell.m */; };
+		42D7DC01191BF72C00856FC8 /* BRContactListViewControllerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42D7DC00191BF72C00856FC8 /* BRContactListViewControllerCell.xib */; };
 		42F38A31191956D500022C21 /* BRConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F38A30191956D500022C21 /* BRConstants.m */; };
 		42F38A341919601700022C21 /* BRMeetingRoomsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F38A331919601700022C21 /* BRMeetingRoomsCollectionViewController.m */; };
 		42F38A371919633F00022C21 /* BRMeetingRoomsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F38A361919633F00022C21 /* BRMeetingRoomsCollectionViewCell.m */; };
@@ -211,6 +214,11 @@
 		42A5425C1917E33500D34B1D /* Book RoomTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Book RoomTests-Info.plist"; sourceTree = "<group>"; };
 		42A5425E1917E33500D34B1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		42A542601917E33500D34B1D /* Book_RoomTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Book_RoomTests.m; sourceTree = "<group>"; };
+		42D7DBFA191AA6A500856FC8 /* BRContactSearchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRContactSearchOperation.h; sourceTree = "<group>"; };
+		42D7DBFB191AA6A500856FC8 /* BRContactSearchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRContactSearchOperation.m; sourceTree = "<group>"; };
+		42D7DBFD191BF71F00856FC8 /* BRContactListViewControllerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRContactListViewControllerCell.h; sourceTree = "<group>"; };
+		42D7DBFE191BF71F00856FC8 /* BRContactListViewControllerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRContactListViewControllerCell.m; sourceTree = "<group>"; };
+		42D7DC00191BF72C00856FC8 /* BRContactListViewControllerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BRContactListViewControllerCell.xib; sourceTree = "<group>"; };
 		42F38A2F191956D500022C21 /* BRConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRConstants.h; sourceTree = "<group>"; };
 		42F38A30191956D500022C21 /* BRConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRConstants.m; sourceTree = "<group>"; };
 		42F38A321919601700022C21 /* BRMeetingRoomsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRMeetingRoomsCollectionViewController.h; sourceTree = "<group>"; };
@@ -399,6 +407,8 @@
 				42243322191840E500AF9488 /* HTTPCRUDOperation.m */,
 				4224332419191D2500AF9488 /* BRCalendarResourcesOperation.h */,
 				4224332519191D2500AF9488 /* BRCalendarResourcesOperation.m */,
+				42D7DBFA191AA6A500856FC8 /* BRContactSearchOperation.h */,
+				42D7DBFB191AA6A500856FC8 /* BRContactSearchOperation.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -518,6 +528,9 @@
 				42F38A351919633F00022C21 /* BRMeetingRoomsCollectionViewCell.h */,
 				42F38A361919633F00022C21 /* BRMeetingRoomsCollectionViewCell.m */,
 				42F38A381919635700022C21 /* BRMeetingRoomsCollectionViewCell.xib */,
+				42D7DBFD191BF71F00856FC8 /* BRContactListViewControllerCell.h */,
+				42D7DBFE191BF71F00856FC8 /* BRContactListViewControllerCell.m */,
+				42D7DC00191BF72C00856FC8 /* BRContactListViewControllerCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -635,6 +648,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42F38A391919635700022C21 /* BRMeetingRoomsCollectionViewCell.xib in Resources */,
+				42D7DC01191BF72C00856FC8 /* BRContactListViewControllerCell.xib in Resources */,
 				4224329919180F4800AF9488 /* GTMOAuth2ViewTouch.xib in Resources */,
 				42A5424E1917E33500D34B1D /* Images.xcassets in Resources */,
 				42A542401917E33500D34B1D /* InfoPlist.strings in Resources */,
@@ -678,6 +692,7 @@
 				4224329819180F4800AF9488 /* GTMOAuth2ViewControllerTouch.m in Sources */,
 				422432E81918109700AF9488 /* GTLCalendarSetting.m in Sources */,
 				422432E51918109700AF9488 /* GTLCalendarFreeBusyRequestItem.m in Sources */,
+				42D7DBFF191BF71F00856FC8 /* BRContactListViewControllerCell.m in Sources */,
 				422433131918120F00AF9488 /* GTLBatchResult.m in Sources */,
 				422432EA1918109700AF9488 /* GTLCalendarTimePeriod.m in Sources */,
 				4224332619191D2500AF9488 /* BRCalendarResourcesOperation.m in Sources */,
@@ -686,6 +701,7 @@
 				4224331C191830DA00AF9488 /* BRHomeView.m in Sources */,
 				42A5424C1917E33500D34B1D /* BRHomeViewController.m in Sources */,
 				422432E41918109700AF9488 /* GTLCalendarFreeBusyGroup.m in Sources */,
+				42D7DBFC191AA6A500856FC8 /* BRContactSearchOperation.m in Sources */,
 				422432DA1918109700AF9488 /* GTLCalendarColorDefinition.m in Sources */,
 				42A542461917E33500D34B1D /* BRAppDelegate.m in Sources */,
 				4224330A191811E600AF9488 /* GTMHTTPFetcherService.m in Sources */,

@@ -24,6 +24,11 @@
 @class GTMOAuth2Authentication;
 typedef void (^HTTPCRUDOperationCompletionBlock)(__weak HTTPCRUDOperation *HTTPCRUDOperation);
 
+typedef enum {
+    kHTTPCRUDOperationCalendar,
+    kHTTPCRUDOperationContacts
+} HTTPCRUDOperationType;
+
 @interface HTTPCRUDOperation : NSOperation
 
 #pragma mark - Callback Properties
@@ -36,6 +41,7 @@ typedef void (^HTTPCRUDOperationCompletionBlock)(__weak HTTPCRUDOperation *HTTPC
 @property (nonatomic, assign) HTTPCRUDOperationState state;
 
 #pragma mark - Request Properties
+@property (nonatomic, assign) HTTPCRUDOperationType type;
 @property (nonatomic, assign) HTTPMethod method;
 @property (nonatomic, strong) NSString *protocol;
 @property (nonatomic, strong) NSString *path;
@@ -45,8 +51,6 @@ typedef void (^HTTPCRUDOperationCompletionBlock)(__weak HTTPCRUDOperation *HTTPC
 @property (nonatomic, strong) NSDictionary *attachments;
 
 + (NSOperationQueue *)networkingQueue;
-+ (NSURL *)baseURL;
-+ (void)setBaseURL:(NSURL *)baseURL;
 + (GTMOAuth2Authentication *)googleAuth;
 + (void)setGoogleAuth:(GTMOAuth2Authentication *)newGoogleAuth;
 

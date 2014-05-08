@@ -1,17 +1,17 @@
 //
-//  BRCalendarResourcesOperation.m
+//  BRContactSearchOperation.m
 //  Book Room
 //
-//  Created by DX169-XL on 2014-05-06.
+//  Created by DX169-XL on 2014-05-07.
 //  Copyright (c) 2014 Pivotal Labs. All rights reserved.
 //
 
-#import "BRCalendarResourcesOperation.h"
+#import "BRContactSearchOperation.h"
 
-@implementation BRCalendarResourcesOperation
+@implementation BRContactSearchOperation
 
 - (NSString *)path {
-    return [NSString stringWithFormat:@"resource/2.0/%@/",kGoogleAppsDomain];
+    return [NSString stringWithFormat:@"default/full?q=%@",self.query];
 }
 
 - (NSMutableDictionary *)queryParameters {
@@ -29,7 +29,7 @@
 }
 
 - (HTTPCRUDOperationType)type {
-    return kHTTPCRUDOperationCalendar;
+    return kHTTPCRUDOperationContacts;
 }
 
 @end

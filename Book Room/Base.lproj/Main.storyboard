@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="An Event" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yHd-0g-OIy">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="An Event" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="yHd-0g-OIy">
                                 <rect key="frame" x="29" y="112" width="263" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -44,9 +44,22 @@
                                     <action selector="meetingRoomButtonTapped:" destination="kh9-bI-dsS" eventType="touchUpInside" id="9gg-1z-wBW"/>
                                 </connections>
                             </button>
+                            <collectionView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WH4-iM-3pe">
+                                <rect key="frame" x="29" y="150" width="263" height="200"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="CHO-G2-JkC">
+                                    <size key="itemSize" width="263" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <connections>
+                            <outlet property="collectionView" destination="WH4-iM-3pe" id="KiU-X6-nAT"/>
                             <outlet property="createEventButton" destination="aag-Gs-0RF" id="9nB-pq-bsb"/>
                             <outlet property="eventTitleTextField" destination="yHd-0g-OIy" id="bon-bX-YUW"/>
                             <outlet property="meetingRoomButton" destination="9du-hw-dcg" id="eVy-5Y-SxH"/>
@@ -94,6 +107,11 @@
                         <barButtonItem key="leftBarButtonItem" title="Close" id="Gek-3c-rtx">
                             <connections>
                                 <action selector="closeButtonTapped:" destination="OSv-pJ-p0p" id="7pt-fP-haa"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Refresh" id="Mkm-lb-cxE">
+                            <connections>
+                                <action selector="refreshButtonTapped:" destination="OSv-pJ-p0p" id="oqg-PA-Y5A"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

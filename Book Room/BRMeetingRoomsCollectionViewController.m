@@ -27,7 +27,8 @@ static NSInteger const kMeetingRoomsFetchStep = 20;
 
 - (NSMutableArray *)availableMeetingRooms {
     if (!_availableMeetingRooms) {
-        _availableMeetingRooms = [NSMutableArray array];
+        NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:kGoogleResourceNameKey ascending:YES];
+        _availableMeetingRooms = [[self.meetingRooms sortedArrayUsingDescriptors:@[descriptor]] mutableCopy];
     }
     return _availableMeetingRooms;
 }
@@ -39,7 +40,7 @@ static NSInteger const kMeetingRoomsFetchStep = 20;
     _meetingRooms = meetingRooms;
 
     self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.hud.labelText = @"Loading free rooms...";
+    self.hud.labelText = @"Updating rooms...";
 
     [self getMeetingRoomScheduleFromMeetingRooms:_meetingRooms forCount:0];
 }
@@ -78,6 +79,7 @@ static NSInteger const kMeetingRoomsFetchStep = 20;
         query.timeMin = min;
         query.timeMax = max;
         query.items = rooms;
+        query.fields = @"calendars";
 
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.calendarService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id object, NSError *error) {
@@ -88,11 +90,8 @@ static NSInteger const kMeetingRoomsFetchStep = 20;
                         NSError *error = response.calendars.JSON[roomKey][kGoogleFreeBusyResponseErrorkey];
                         NSArray *busyArray = response.calendars.JSON[roomKey][kGoogleFreeBusyResponseBusykey];
 
-                        if (!error && !busyArray) {
-                            [self.availableMeetingRooms addObject:[self getRoomForEmail:roomKey]];
-
-                        } else if (!error && busyArray) {
-                            [self addMeetingRoom:roomKey ifNoConflictingTime:busyArray];
+                        if (error || busyArray) {
+                            [self removeMeetingRoom:roomKey];
                         }
                     }
 
@@ -103,36 +102,21 @@ static NSInteger const kMeetingRoomsFetchStep = 20;
     });
 }
 
-- (id)getRoomForEmail:(NSString *)email {
+- (id)getRoomForRoomKey:(NSString *)roomKey {
     for (NSDictionary *room in self.meetingRooms) {
-        if ([room[kGoogleResourceEmailkey] isEqualToString:email]) {
+        if ([room[kGoogleResourceEmailkey] isEqualToString:roomKey]) {
             return room;
         }
     }
     return [NSNull null];
 }
 
-- (void)addMeetingRoom:(NSString *)roomKey ifNoConflictingTime:(NSArray *)busy {
-    NSLog(@"%@ - %@",[self getRoomForEmail:roomKey][kGoogleResourceNameKey], busy);
-    for (NSDictionary *time in busy) {
-
-        GTLDateTime *start = [GTLDateTime dateTimeWithRFC3339String:time[@"start"]];
-        GTLDateTime *end = [GTLDateTime dateTimeWithRFC3339String:time[@"end"]];
-
-        NSTimeInterval minTimeInterval = [self.minDate timeIntervalSince1970];
-        NSTimeInterval maxTimeInterval = [self.maxDate timeIntervalSince1970];
-        NSTimeInterval startTimeInterval = [start.date timeIntervalSince1970];
-        NSTimeInterval endTimeInterval = [end.date timeIntervalSince1970];
-
-        if (minTimeInterval <= startTimeInterval && startTimeInterval < maxTimeInterval) {
-            break;
-        } else if (startTimeInterval <= minTimeInterval && maxTimeInterval <= endTimeInterval) {
-            break;
-        } else if (minTimeInterval < endTimeInterval && endTimeInterval <= maxTimeInterval) {
+- (void)removeMeetingRoom:(NSString *)roomKey {
+    for (NSDictionary *room in self.availableMeetingRooms) {
+        if ([room[kGoogleResourceEmailkey] isEqualToString:roomKey]) {
+            [self.availableMeetingRooms removeObject:room];
             break;
         }
-
-        [self.availableMeetingRooms addObject:[self getRoomForEmail:roomKey]];
     }
 }
 
@@ -168,16 +152,30 @@ static NSInteger const kMeetingRoomsFetchStep = 20;
     }
 }
 
+- (IBAction)refreshButtonTapped:(UIBarButtonItem *)sender {
+    self.availableMeetingRooms = nil;
+    
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hud.labelText = kLoadingMeetingRoomsText;
+    
+    [self getMeetingRoomScheduleFromMeetingRooms:self.meetingRooms forCount:0];
+}
+
 #pragma mark -
 #pragma mark UICollectionViewDataSource Methods
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.availableMeetingRooms.count;
+    return self.availableMeetingRooms.count > 0 ? self.availableMeetingRooms.count : 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     BRMeetingRoomsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMeetingRoomsCollectionViewCellIdentifier forIndexPath:indexPath];
-    [cell configureForMeetingRoom:self.availableMeetingRooms[indexPath.item]];
+    if (self.availableMeetingRooms.count > 0) {
+        [cell configureForMeetingRoom:self.availableMeetingRooms[indexPath.item]];
+
+    } else {
+        [cell configureForNoMeetingRooms];
+    }
     return cell;
 }
 
@@ -185,6 +183,8 @@ static NSInteger const kMeetingRoomsFetchStep = 20;
 #pragma mark UICollectionViewDelegate Methods
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.availableMeetingRooms.count == 0) return;
+
     if ([self.delegate conformsToProtocol:@protocol(BRMeetingRoomsCollectionViewControllerDelegate)]) {
         [self.delegate didSelectMeetingRoom:self.availableMeetingRooms[indexPath.item]];
     }

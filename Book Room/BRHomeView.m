@@ -8,7 +8,7 @@
 
 #import "BRHomeView.h"
 
-@interface BRHomeView ()
+@interface BRHomeView () <UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *eventTitleTextField;
 @property (strong, nonatomic) IBOutlet UIButton *createEventButton;
@@ -60,6 +60,25 @@
     self.meetingRoomButton.layer.borderColor = [UIColor blackColor].CGColor;
     self.meetingRoomButton.layer.borderWidth = 1;
     self.meetingRoomButton.layer.cornerRadius = 5;
+
+    self.eventTitleTextField.delegate = self;
+}
+
+#pragma mark -
+#pragma mark UITextFieldDelegate Methods
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if ([self.delegate conformsToProtocol:@protocol(BRHomeViewDelegate)]) {
+        [self.delegate searchForQuery:[textField.text stringByReplacingCharactersInRange:range withString:string]];
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    if ([self.delegate conformsToProtocol:@protocol(BRHomeViewDelegate)]) {
+        [self.delegate cancelSearch];
+    }
+    return YES;
 }
 
 @end

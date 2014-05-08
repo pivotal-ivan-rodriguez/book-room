@@ -10,6 +10,8 @@
 
 @interface BRConstants : NSObject
 
+extern NSString * const kGoogleAppsDomain;
+
 extern NSString * const kGoogleFeedKey;
 extern NSString * const kGoogleEntryKey;
 extern NSString * const kGooglePropertiesKey;
@@ -19,9 +21,16 @@ extern NSString * const kGoogleResourceNameKey;
 extern NSString * const kGoogleResourceEmailkey;
 extern NSString * const kGoogleFreeBusyResponseBusykey;
 extern NSString * const kGoogleFreeBusyResponseErrorkey;
+extern NSString * const kGoogleContactResponseNameKey;
+extern NSString * const kGoogleContactResponseFullNameKey;
+extern NSString * const kGoogleContactResponseEmailKey;
 
 extern NSString * const kModalMeetingRoomsCollectionViewControllerSegue;
 
 extern NSString * const kMeetingRoomsCollectionViewCellIdentifier;
+extern NSString * const kContactsCollectionViewCellIdentifier;
+
+extern NSString * const kLoadingMeetingRoomsText;
+extern NSString * const kNoMeetingRoomsText;
 
 @end

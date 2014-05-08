@@ -7,16 +7,12 @@
 //
 
 #import "BRAppDelegate.h"
-#import "HTTPCRUDOperation.h"
-
-static NSString * const kGoogleCalendarBaseURL =  @"https://apps-apis.google.com/a/feeds/calendar";
 
 @implementation BRAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    [HTTPCRUDOperation setBaseURL:[NSURL URLWithString:kGoogleCalendarBaseURL]];
     return YES;
 }
 							

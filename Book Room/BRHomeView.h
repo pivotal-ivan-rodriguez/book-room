@@ -12,11 +12,16 @@
 
 - (void)createEventWithTitle:(NSString *)title;
 - (void)meetingRoomButtonTapped;
+- (void)searchForQuery:(NSString *)query;
+- (void)cancelSearch;
+
 @end
 
 @interface BRHomeView : UIView
 
 @property (nonatomic, weak) id<BRHomeViewDelegate>delegate;
+
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 
 - (void)configureSubViews;
 

@@ -28,6 +28,9 @@ NSString * const HTTPMethodPostString = @"POST";
 NSString * const HTTPMethodDeleteString = @"DELETE";
 NSString * const HTTPMethodPatchString = @"PATCH";
 
+static NSString * const kGoogleCalendarBaseURL =  @"https://apps-apis.google.com/a/feeds/calendar";
+static NSString * const kGoogleContactsBaseURL = @"https://www.google.com/m8/feeds/contacts";
+
 typedef void (^HTTPCRUDOperationInternalCompletionBlock)();
 
 NSDictionary static *NSDictionaryRemoveNSNulls(NSDictionary **dictionary);
@@ -40,18 +43,20 @@ id static NSCollectionRemoveNSNulls(id *collection);
 @property (nonatomic, copy) HTTPCRUDOperationInternalCompletionBlock internalCompletionBlock;
 @property (nonatomic, readonly) HTTPCRUDOperationCompletionBlock userProvidedCompletionBlock;
 
-@end
+@property (nonatomic, strong) NSURL *baseURL;
 
+@end
 
 @implementation HTTPCRUDOperation
 
-static NSURL *baseURL;
-+ (NSURL *)baseURL {
-    return baseURL;
-}
-
-+ (void)setBaseURL:(NSURL *)newBaseURL {
-    baseURL = newBaseURL;
+- (NSURL *)baseURL {
+    switch (self.type) {
+        case kHTTPCRUDOperationContacts:
+            return [NSURL URLWithString:kGoogleContactsBaseURL];
+        case kHTTPCRUDOperationCalendar:
+        default:
+            return [NSURL URLWithString:kGoogleCalendarBaseURL];
+    }
 }
 
 static GTMOAuth2Authentication *googleAuth;
@@ -83,11 +88,6 @@ static NSOperationQueue *networkingQueue;
     if (self.isCancelled) {
         return;
     }
-    
-#ifdef OFFLINE_MODE
-    [self success];
-    return;
-#endif
     
     if (self.HTTPResponse.statusCode >= 200 && self.HTTPResponse.statusCode <= 299) {
         [self success];
@@ -134,10 +134,6 @@ static NSOperationQueue *networkingQueue;
     return;
 }
 
-- (id)testResponse {
-    return nil;
-}
-
 - (void)setOrAddError:(NSError *)error toErrorRerence:(NSError **)errorRerence {
     if(!*errorRerence) {
         *errorRerence = error;
@@ -148,9 +144,6 @@ static NSOperationQueue *networkingQueue;
 }
 
 - (id)performJSONFetch:(NSError **)error {
-#ifdef OFFLINE_MODE
-    return [self testResponse];
-#endif
     NSData *jsonObjectData;
     
     if (self.bodyJSON) {
@@ -178,6 +171,7 @@ static NSOperationQueue *networkingQueue;
     }
     
     NSURL *requestURL = [self URLForPath:self.path withParameters:self.queryParameters];
+    NSLog(@"Request: %@ %@",[self stringFromOperationMethod:self.method], requestURL);
     NSString *appVersion = [NSString stringWithFormat:@"%@-%@",
                             [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"],
                             [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"]];
@@ -190,7 +184,10 @@ static NSOperationQueue *networkingQueue;
         [googleAuth authorizeRequest:jsonRequest];
         [jsonRequest setValue:@"application/atom+xml" forHTTPHeaderField:@"Accept"];
         [jsonRequest setValue:@"application/atom+xml" forHTTPHeaderField:@"Content-Type"];
-        
+        if (self.type == kHTTPCRUDOperationContacts) {
+            [jsonRequest setValue:@"3.1" forHTTPHeaderField:@"GData-Version"];
+        }
+
     } else {
         [jsonRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
         if (self.attachments) {
@@ -241,10 +238,10 @@ static NSOperationQueue *networkingQueue;
     if (self.HTTPResponse == nil) {
         NSError *nilResponseError = [NSError errorWithDomain:@"Remote Operation"
                                                         code:0x03
-                                                    userInfo:@{NSLocalizedFailureReasonErrorKey : @"No response returned for operaiton"}];
+                                                    userInfo:@{NSLocalizedFailureReasonErrorKey : @"No response returned for operation"}];
         [self setOrAddError:nilResponseError toErrorRerence:error];
     }
-    
+
     if (responseData.length > 0) {
         if (googleAuth) {
             NSError *parseError = nil;
@@ -266,11 +263,11 @@ static NSOperationQueue *networkingQueue;
 - (NSURL *)URLForPath:(NSString *)path withParameters:(NSDictionary *)parameters {
     if (parameters) {
         if (self.method == HTTPMethodGet || self.method == HTTPMethodDelete) {
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?%@",baseURL, path, [self encodeParameters:parameters]]];
-            return url;
+            return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?%@",self.baseURL, path, [self encodeParameters:parameters]]];
         }
     }
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", baseURL, path]];
+    NSString *url = [NSString stringWithFormat:@"%@/%@", self.baseURL, path];
+    return [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
 - (NSString *)encodeParameters:(NSDictionary *)parameters {

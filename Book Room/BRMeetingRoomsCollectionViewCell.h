@@ -11,5 +11,6 @@
 @interface BRMeetingRoomsCollectionViewCell : UICollectionViewCell
 
 - (void)configureForMeetingRoom:(NSDictionary *)room;
+- (void)configureForNoMeetingRooms;
 
 @end
