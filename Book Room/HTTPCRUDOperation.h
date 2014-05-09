@@ -58,6 +58,5 @@ typedef enum {
 - (void)success;
 - (void)failure:(NSError *)error;
 - (void)setCompletionBlock:(HTTPCRUDOperationCompletionBlock)completionBlock;
-- (id)testResponse;
 
 @end

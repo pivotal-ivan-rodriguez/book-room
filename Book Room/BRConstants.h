@@ -26,9 +26,13 @@ extern NSString * const kGoogleContactResponseFullNameKey;
 extern NSString * const kGoogleContactResponseEmailKey;
 
 extern NSString * const kModalMeetingRoomsCollectionViewControllerSegue;
+extern NSString * const kModalFromDatePickerViewControllerSegue;
+extern NSString * const kModalToDatePickerViewControllerSegue;
+extern NSString * const kModalRemoveGuestViewControllerSegue;
 
 extern NSString * const kMeetingRoomsCollectionViewCellIdentifier;
 extern NSString * const kContactsCollectionViewCellIdentifier;
+extern NSString * const kGuestsCollectionViewCellIdentifier;
 
 extern NSString * const kLoadingMeetingRoomsText;
 extern NSString * const kNoMeetingRoomsText;

@@ -14,6 +14,8 @@
 - (void)meetingRoomButtonTapped;
 - (void)searchForQuery:(NSString *)query;
 - (void)cancelSearch;
+- (void)addGuest:(NSString *)guest;
+- (void)tapGestureRecognized:(UITapGestureRecognizer *)tap;
 
 @end
 
@@ -22,7 +24,13 @@
 @property (nonatomic, weak) id<BRHomeViewDelegate>delegate;
 
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) IBOutlet UICollectionView *guestsCollectionView;
 
 - (void)configureSubViews;
+- (void)setFromButtonTitleForDate:(NSDate *)date;
+- (void)setToButtonTitleForDate:(NSDate *)date;
+- (void)setRoomButtonTitleForRoom:(NSDictionary *)room;
+- (void)setTextForGuestsTextFiew:(NSString *)text;
+- (void)clearData;
 
 @end

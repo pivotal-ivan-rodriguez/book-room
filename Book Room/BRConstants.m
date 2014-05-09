@@ -26,9 +26,13 @@ NSString * const kGoogleContactResponseFullNameKey = @"gd:fullName";
 NSString * const kGoogleContactResponseEmailKey = @"gd:email";
 
 NSString * const kModalMeetingRoomsCollectionViewControllerSegue = @"modalMeetingRoomsCollectionViewControllerSegue";
+NSString * const kModalFromDatePickerViewControllerSegue = @"modalFromDatePickerViewControllerSegue";
+NSString * const kModalToDatePickerViewControllerSegue = @"modalToDatePickerViewControllerSegue";
+NSString * const kModalRemoveGuestViewControllerSegue = @"modalRemoveGuestViewControllerSegue";
 
 NSString * const kMeetingRoomsCollectionViewCellIdentifier = @"meetingRoomsCollectionViewCellIdentifier";
 NSString * const kContactsCollectionViewCellIdentifier = @"contactsCollectionViewCellIdentifier";
+NSString * const kGuestsCollectionViewCellIdentifier = @"guestsCollectionViewCellIdentifier";
 
 NSString * const kLoadingMeetingRoomsText = @"Loading free rooms...";
 NSString * const kNoMeetingRoomsText = @"Error: We couldn't load the meeting rooms. Please try again.";

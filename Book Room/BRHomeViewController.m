@@ -13,19 +13,40 @@
 #import "BRContactSearchOperation.h"
 #import "BRMeetingRoomsCollectionViewController.h"
 #import "BRContactListViewControllerCell.h"
+#import "UIImage+ImageEffects.h"
+#import "BRDatePickerViewController.h"
+#import "BRGuestCollectionViewControllerCell.h"
+#import "BRRemoveGuestViewController.h"
+#import "MBProgressHUD.h"
 
 static NSString * const kKeychainItemName = @"Book a Room";
 static NSString * const kClientID = @"776916698629-jm882d2nnh738lo5qio3quqehej4i4a3.apps.googleusercontent.com";
 static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 
-@interface BRHomeViewController () <BRHomeViewDelegate, BRMeetingRoomsCollectionViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+typedef enum {
+    kNoGuestsAlert,
+    kNoRoomAlert
+} AlertType;
+
+@interface BRHomeViewController () <BRHomeViewDelegate, BRMeetingRoomsCollectionViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, BRDatePickerViewControllerDelegate, BRRemoveGuestViewControllerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, weak) BRMeetingRoomsCollectionViewController *meetingRoomsViewController;
+@property (nonatomic, weak) BRDatePickerViewController *fromDatePickerViewController;
+@property (nonatomic, weak) BRDatePickerViewController *toDatePickerViewController;
+@property (nonatomic, weak) BRRemoveGuestViewController *removeGuestViewController;
+
 @property (nonatomic, strong) GTLServiceCalendar *calendarService;
 @property (nonatomic, strong) GTLCalendarCalendarListEntry *userCalendar;
 @property (nonatomic, strong) NSArray *meetingRooms;
 @property (nonatomic, strong) NSDictionary *meetingRoom;
 @property (nonatomic, strong) NSMutableArray *contactsList;
+@property (nonatomic, strong) NSDate *fromDate;
+@property (nonatomic, strong) NSDate *toDate;
+@property (nonatomic, strong) NSMutableArray *guests;
+@property (nonatomic, strong) NSDictionary *selectedGuest;
+@property (nonatomic, strong) NSString *eventTitle;
+@property (nonatomic, strong) MBProgressHUD *hud;
+
 @end
 
 @implementation BRHomeViewController
@@ -49,6 +70,13 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
     return _contactsList;
 }
 
+- (NSMutableArray *)guests {
+    if (!_guests) {
+        _guests = [NSMutableArray array];
+    }
+    return _guests;
+}
+
 #pragma mark -
 #pragma mark Private Methods
 
@@ -59,9 +87,27 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
         self.meetingRoomsViewController.calendarService = self.calendarService;
         self.meetingRoomsViewController.delegate = self;
         self.meetingRoomsViewController.meetingRooms = self.meetingRooms;
-        NSDate *now = [NSDate date];
-        self.meetingRoomsViewController.minDate = [now dateByAddingTimeInterval:1*60*60];;
-        self.meetingRoomsViewController.maxDate = [now dateByAddingTimeInterval:2*60*60];
+        self.meetingRoomsViewController.minDate = self.fromDate;
+        self.meetingRoomsViewController.maxDate = self.toDate;
+
+    } else if ([segue.identifier isEqualToString:kModalFromDatePickerViewControllerSegue]) {
+        self.fromDatePickerViewController = segue.destinationViewController;
+        self.fromDatePickerViewController.delegate = self;
+        self.fromDatePickerViewController.view.backgroundColor = [UIColor colorWithPatternImage:[self blurrImageForView:self.fromDatePickerViewController.view]];
+        self.fromDatePickerViewController.type = kFromDatePicker;
+
+    } else if ([segue.identifier isEqualToString:kModalToDatePickerViewControllerSegue]) {
+        self.toDatePickerViewController = segue.destinationViewController;
+        self.toDatePickerViewController.delegate = self;
+        self.toDatePickerViewController.view.backgroundColor = [UIColor colorWithPatternImage:[self blurrImageForView:self.toDatePickerViewController.view]];
+        self.toDatePickerViewController.type = kToDatePicker;
+
+    } else if ([segue.identifier isEqualToString:kModalRemoveGuestViewControllerSegue]) {
+        self.removeGuestViewController = segue.destinationViewController;
+        self.removeGuestViewController.delegate = self;
+        NSIndexPath *indexPath = sender;
+        self.removeGuestViewController.guest = self.guests[indexPath.item];
+        self.removeGuestViewController.view.backgroundColor = [UIColor colorWithPatternImage:[self blurrImageForView:self.removeGuestViewController.view]];
     }
 }
 
@@ -82,8 +128,11 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 
     self.view.collectionView.dataSource = self;
     self.view.collectionView.delegate = self;
+    self.view.guestsCollectionView.dataSource = self;
+    self.view.guestsCollectionView.delegate = self;
 
     [self.view.collectionView registerNib:[UINib nibWithNibName:@"BRContactListViewControllerCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:kContactsCollectionViewCellIdentifier];
+    [self.view.guestsCollectionView registerNib:[UINib nibWithNibName:@"BRGuestCollectionViewControllerCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:kGuestsCollectionViewCellIdentifier];
 }
 
 - (void)didReceiveMemoryWarning
@@ -161,6 +210,8 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 }
 
 - (void)showSearchCollectionView {
+    self.view.collectionView.layer.cornerRadius = 5.0f;
+
     self.view.collectionView.alpha = 0;
     self.view.collectionView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
@@ -178,40 +229,111 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
     }];
 }
 
-#pragma mark -
-#pragma mark BRHomeViewDelegate Methods
+- (UIImage *)blurrImageForView:(UIView *)view {
+    CGRect initialFrame = [view convertRect:view.bounds toView:self.view];
 
-- (void)createEventWithTitle:(NSString *)title {
+    UIGraphicsBeginImageContextWithOptions(view.frame.size, NO, self.view.window.screen.scale);
+
+    [self.view drawViewHierarchyInRect:CGRectMake(-initialFrame.origin.x, -initialFrame.origin.y, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)) afterScreenUpdates:YES];
+
+    UIImage *blurImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    blurImage = [blurImage applyLightEffect];
+
+    return blurImage;
+}
+
+- (void)createEvent {
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hud.labelText = @"Creating meeting...";
+
     GTLCalendarEventDateTime *start = [GTLCalendarEventDateTime object];
     GTLCalendarEventDateTime *end = [GTLCalendarEventDateTime object];
-    NSDate *now = [NSDate date];
-    start.dateTime = [GTLDateTime dateTimeWithDate:now timeZone:[NSTimeZone systemTimeZone]];
-    end.dateTime = [GTLDateTime dateTimeWithDate:[now dateByAddingTimeInterval:60*60] timeZone:[NSTimeZone systemTimeZone]];
+    start.dateTime = [GTLDateTime dateTimeWithDate:self.fromDate timeZone:[NSTimeZone systemTimeZone]];
+    end.dateTime = [GTLDateTime dateTimeWithDate:self.toDate timeZone:[NSTimeZone systemTimeZone]];
 
     GTLCalendarEventAttendee *room = [GTLCalendarEventAttendee object];
     room.displayName = self.meetingRoom[kGoogleResourceNameKey];
     room.email = self.meetingRoom[kGoogleResourceEmailkey];
 
+    NSMutableArray *attendees = [NSMutableArray array];
+    [attendees addObject:room];
+    for (NSDictionary *guest in self.guests) {
+        GTLCalendarEventAttendee *g = [GTLCalendarEventAttendee object];
+        g.displayName = guest[kGoogleContactResponseNameKey];
+        g.email = guest[kGoogleContactResponseEmailKey];
+        [attendees addObject:g];
+    }
+
     GTLCalendarEvent *calEvent = [GTLCalendarEvent object];
-    calEvent.summary = title;
+    calEvent.summary = self.eventTitle;
     calEvent.start = start;
     calEvent.end = end;
-    calEvent.attendees = @[room];
+    calEvent.attendees = attendees;
     calEvent.location = self.meetingRoom[kGoogleResourceNameKey];
 
     GTLQueryCalendar *query = [GTLQueryCalendar queryForEventsInsertWithObject:calEvent calendarId:self.userCalendar.identifier];
     [self.calendarService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id object, NSError *error) {
+        [self.hud hide:YES];
+
         if (!error) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pivotal Meetings" message:@"Meeting created successfully!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alert show];
+            [self clearData];
             NSLog(@"response %@",object);
 
         } else {
-            NSLog(@"Request failed %@",error);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pivotal Meetings" message:[NSString stringWithFormat:@"Error creating the meeting: %@",error] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alert show];
         }
     }];
 }
 
+- (void)clearData {
+    self.guests = nil;
+    self.meetingRoom = nil;
+    self.fromDate = nil;
+    self.toDate = nil;
+    [self.view clearData];
+    [self.view.guestsCollectionView reloadData];
+}
+
+#pragma mark -
+#pragma mark BRHomeViewDelegate Methods
+
+- (void)createEventWithTitle:(NSString *)title {
+    self.eventTitle = title;
+
+    if (self.fromDate == nil || self.toDate == nil) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please a start and finish date first" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        return;
+
+    } else if (self.guests.count == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your guest list is empty, do you want to continue?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create",nil];
+        alert.tag = kNoGuestsAlert;
+        [alert show];
+        return;
+
+    } else if (self.meetingRoom == nil) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You haven't selected a meeting room, do you want to continue?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create",nil];
+        alert.tag = kNoRoomAlert;
+        [alert show];
+        return;
+    }
+
+    [self createEvent];
+}
+
 - (void)meetingRoomButtonTapped {
-    [self performSegueWithIdentifier:kModalMeetingRoomsCollectionViewControllerSegue sender:self];
+    BOOL shouldPerform = self.fromDate != nil && self.toDate != nil;
+    if (!shouldPerform) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please select a start and finish date first." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+
+    } else {
+        [self performSegueWithIdentifier:kModalMeetingRoomsCollectionViewControllerSegue sender:self];
+    }
 }
 
 - (void)searchForQuery:(NSString *)query {
@@ -230,7 +352,7 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
     operation.method = HTTPMethodGet;
     [operation setCompletionBlock:^(HTTPCRUDOperation *__weak HTTPCRUDOperation) {
         if (HTTPCRUDOperation.state == HTTPCRUDOperationSuccessfulState) {
-            NSArray *results = HTTPCRUDOperation.returnedObject[kGoogleFeedKey][kGoogleEntryKey];
+            NSArray *results = HTTPCRUDOperation.returnedObject[kGoogleFeedKey][kGoogleEntryKey];   
             for (NSDictionary *result in results) {
                 if (![result isKindOfClass:[NSDictionary class]]) continue;
 
@@ -250,8 +372,23 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 
 - (void)cancelSearch {
     self.contactsList = nil;
-
+    self.selectedGuest = nil;
     [self hideSearchCollectionView];
+}
+
+- (void)addGuest:(NSString *)guest {
+    if (![self.guests containsObject:self.selectedGuest]) {
+        [self.guests addObject:self.selectedGuest];
+        [self.view.guestsCollectionView reloadData];
+        [self.view setTextForGuestsTextFiew:nil];
+        self.selectedGuest = nil;
+    }
+}
+
+- (void)tapGestureRecognized:(UITapGestureRecognizer *)tap {
+    if (!self.view.collectionView.hidden && !CGRectContainsPoint(self.view.collectionView.frame, [tap locationInView:self.view])) {
+        [self hideSearchCollectionView];
+    }
 }
 
 #pragma mark -
@@ -264,19 +401,29 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 - (void)didSelectMeetingRoom:(NSDictionary *)meetingRoom {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     self.meetingRoom = meetingRoom;
+    [self.view setRoomButtonTitleForRoom:self.meetingRoom];
 }
 
 #pragma mark -
 #pragma mark UICollectionViewDataSource Methods
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if (collectionView.tag == 1) return self.guests.count;
+
     return self.contactsList.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    BRContactListViewControllerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kContactsCollectionViewCellIdentifier forIndexPath:indexPath];
+    UICollectionViewCell *cell;
 
-    [cell configureForContact:self.contactsList[indexPath.item]];
+    if (collectionView.tag == 0) {
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:kContactsCollectionViewCellIdentifier forIndexPath:indexPath];
+        [(BRContactListViewControllerCell *)cell configureForContact:self.contactsList[indexPath.item]];
+
+    } else if (collectionView.tag == 1) {
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:kGuestsCollectionViewCellIdentifier forIndexPath:indexPath];
+        [(BRGuestCollectionViewControllerCell *)cell configureForGuest:self.guests[indexPath.item]];
+    }
 
     return cell;
 }
@@ -286,6 +433,69 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
+    if (collectionView.tag == 0) {
+        if (indexPath.item >= self.contactsList.count) return;
+
+        self.selectedGuest = self.contactsList[indexPath.item];
+        [self.view setTextForGuestsTextFiew:self.selectedGuest[kGoogleContactResponseNameKey]];
+        [self hideSearchCollectionView];
+
+    } else if (collectionView.tag == 1) {
+        [self performSegueWithIdentifier:kModalRemoveGuestViewControllerSegue sender:indexPath];
+    }
+}
+
+#pragma mark -
+#pragma mark BRDatePickerViewControllerDelegate Methods
+
+- (void)didSelectDate:(NSDate *)date ofType:(DatePickerType)type {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    switch (type) {
+        case kFromDatePicker:
+            self.fromDate = date;
+            [self.view setFromButtonTitleForDate:self.fromDate];
+            break;
+        case kToDatePicker:
+            self.toDate = date;
+            [self.view setToButtonTitleForDate:self.toDate];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)dismissPickerViewController {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark -
+#pragma mark BRRemoveGuestViewControllerDelegate Methods
+
+- (void)dismissGuestViewController {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)removeGuest:(NSDictionary *)guest {
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+    [self.guests removeObject:guest];
+    [self.view.guestsCollectionView reloadData];
+}
+
+#pragma mark -
+#pragma mark UIAlertViewDelegate Methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == kNoGuestsAlert) {
+        if (buttonIndex == 1) {
+            [self createEvent];
+        }
+    } else if (alertView.tag == kNoRoomAlert) {
+        if (buttonIndex == 1) {
+            [self createEvent];
+        }
+    }
 }
 
 @end
