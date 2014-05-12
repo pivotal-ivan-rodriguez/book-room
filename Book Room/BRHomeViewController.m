@@ -25,7 +25,8 @@ static NSString * const kClientSecret = @"8hTo-W7xyeQhVO3domrWM7Ys";
 
 typedef enum {
     kNoGuestsAlert,
-    kNoRoomAlert
+    kNoRoomAlert,
+    kGuestNotInContactList
 } AlertType;
 
 @interface BRHomeViewController () <BRHomeViewDelegate, BRMeetingRoomsCollectionViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, BRDatePickerViewControllerDelegate, BRRemoveGuestViewControllerDelegate, UIAlertViewDelegate>
@@ -377,11 +378,17 @@ typedef enum {
 }
 
 - (void)addGuest:(NSString *)guest {
-    if (![self.guests containsObject:self.selectedGuest]) {
+    if (self.selectedGuest && ![self.guests containsObject:self.selectedGuest]) {
         [self.guests addObject:self.selectedGuest];
         [self.view.guestsCollectionView reloadData];
         [self.view setTextForGuestsTextFiew:nil];
         self.selectedGuest = nil;
+
+    } else if (!self.selectedGuest && ![self.guests containsObject:guest]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pivotal Rooms" message:[NSString stringWithFormat:@"The Guest '%@' is not in your contacts list, do you want include him/her in your guests list?",guest] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Include",nil];
+        alert.tag = kGuestNotInContactList;
+        [alert show];
+        self.selectedGuest = @{kGoogleContactResponseNameKey:guest,kGoogleContactResponseEmailKey:guest};
     }
 }
 
@@ -495,6 +502,13 @@ typedef enum {
         if (buttonIndex == 1) {
             [self createEvent];
         }
+    } else if (alertView.tag == kGuestNotInContactList) {
+        if (buttonIndex == 1) {
+            [self.guests addObject:self.selectedGuest];
+            [self.view.guestsCollectionView reloadData];
+        }
+        [self.view setTextForGuestsTextFiew:nil];
+        self.selectedGuest = nil;
     }
 }
 
