@@ -385,7 +385,7 @@ typedef enum {
         self.selectedGuest = nil;
 
     } else if (!self.selectedGuest && ![self.guests containsObject:guest]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pivotal Rooms" message:[NSString stringWithFormat:@"The Guest '%@' is not in your contacts list, do you want include him/her in your guests list?",guest] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Include",nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pivotal Rooms" message:[NSString stringWithFormat:@"The Guest '%@' is not in your contacts list, do you want to include him/her in your guests list?",guest] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Include",nil];
         alert.tag = kGuestNotInContactList;
         [alert show];
         self.selectedGuest = @{kGoogleContactResponseNameKey:guest,kGoogleContactResponseEmailKey:guest};
