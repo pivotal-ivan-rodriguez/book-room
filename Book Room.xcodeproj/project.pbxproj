@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		422307961926687800E206F4 /* BRGuest.m in Sources */ = {isa = PBXBuildFile; fileRef = 422307951926687800E206F4 /* BRGuest.m */; };
 		4224329219180F3A00AF9488 /* GTMOAuth2Authentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4224328F19180F3A00AF9488 /* GTMOAuth2Authentication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4224329319180F3A00AF9488 /* GTMOAuth2SignIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 4224329119180F3A00AF9488 /* GTMOAuth2SignIn.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4224329819180F4800AF9488 /* GTMOAuth2ViewControllerTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4224329619180F4800AF9488 /* GTMOAuth2ViewControllerTouch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -99,6 +100,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		422307941926687800E206F4 /* BRGuest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRGuest.h; sourceTree = "<group>"; };
+		422307951926687800E206F4 /* BRGuest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRGuest.m; sourceTree = "<group>"; };
 		4224328E19180F3A00AF9488 /* GTMOAuth2Authentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuth2Authentication.h; sourceTree = "<group>"; };
 		4224328F19180F3A00AF9488 /* GTMOAuth2Authentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMOAuth2Authentication.m; sourceTree = "<group>"; };
 		4224329019180F3A00AF9488 /* GTMOAuth2SignIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuth2SignIn.h; sourceTree = "<group>"; };
@@ -577,6 +580,8 @@
 		42A5426C1917E35100D34B1D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				422307941926687800E206F4 /* BRGuest.h */,
+				422307951926687800E206F4 /* BRGuest.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -782,6 +787,7 @@
 				4224330D191811F300AF9488 /* GTMHTTPFetchHistory.m in Sources */,
 				422433101918120400AF9488 /* GTLBatchQuery.m in Sources */,
 				4224329219180F3A00AF9488 /* GTMOAuth2Authentication.m in Sources */,
+				422307961926687800E206F4 /* BRGuest.m in Sources */,
 				422432FB1918114800AF9488 /* GTLRuntimeCommon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -907,11 +913,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Book Room/Book Room-Prefix.pch";
 				INFOPLIST_FILE = "Book Room/Book Room-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9BB1E654-68B9-4815-AF8B-E47E8E5212AE";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -921,11 +929,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Book Room/Book Room-Prefix.pch";
 				INFOPLIST_FILE = "Book Room/Book Room-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9BB1E654-68B9-4815-AF8B-E47E8E5212AE";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

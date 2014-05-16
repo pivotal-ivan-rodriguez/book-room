@@ -7,6 +7,7 @@
 //
 
 #import "BRGuestCollectionViewControllerCell.h"
+#import "BRGuest.h"
 
 @interface BRGuestCollectionViewControllerCell ()
 
@@ -31,8 +32,8 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)configureForGuest:(NSDictionary *)guest {
-    self.guestLabel.text = [NSString stringWithFormat:@"%@ - %@",guest[kGoogleContactResponseNameKey],guest[kGoogleContactResponseEmailKey]];
+- (void)configureForGuest:(BRGuest *)guest {
+    self.guestLabel.text = [NSString stringWithFormat:@"%@ - %@",guest.name,guest.email];
 }
 
 @end

@@ -17,6 +17,7 @@
 #import "BRDatePickerViewController.h"
 #import "BRGuestCollectionViewControllerCell.h"
 #import "BRRemoveGuestViewController.h"
+#import "BRGuest.h"
 #import "MBProgressHUD.h"
 
 static NSString * const kKeychainItemName = @"Book a Room";
@@ -44,7 +45,7 @@ typedef enum {
 @property (nonatomic, strong) NSDate *fromDate;
 @property (nonatomic, strong) NSDate *toDate;
 @property (nonatomic, strong) NSMutableArray *guests;
-@property (nonatomic, strong) NSDictionary *selectedGuest;
+@property (nonatomic, strong) BRGuest *selectedGuest;
 @property (nonatomic, strong) NSString *eventTitle;
 @property (nonatomic, strong) MBProgressHUD *hud;
 
@@ -259,10 +260,10 @@ typedef enum {
 
     NSMutableArray *attendees = [NSMutableArray array];
     [attendees addObject:room];
-    for (NSDictionary *guest in self.guests) {
+    for (BRGuest *guest in self.guests) {
         GTLCalendarEventAttendee *g = [GTLCalendarEventAttendee object];
-        g.displayName = guest[kGoogleContactResponseNameKey];
-        g.email = guest[kGoogleContactResponseEmailKey];
+        g.displayName = guest.name;
+        g.email = guest.email;
         [attendees addObject:g];
     }
 
@@ -388,7 +389,10 @@ typedef enum {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pivotal Rooms" message:[NSString stringWithFormat:@"The Guest '%@' is not in your contacts list, do you want to include him/her in your guests list?",guest] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Include",nil];
         alert.tag = kGuestNotInContactList;
         [alert show];
-        self.selectedGuest = @{kGoogleContactResponseNameKey:guest,kGoogleContactResponseEmailKey:guest};
+        BRGuest *newGuest = [[BRGuest alloc] init];
+        newGuest.name = guest;
+        newGuest.email = guest;
+        self.selectedGuest = newGuest;
     }
 }
 
@@ -443,8 +447,12 @@ typedef enum {
     if (collectionView.tag == 0) {
         if (indexPath.item >= self.contactsList.count) return;
 
-        self.selectedGuest = self.contactsList[indexPath.item];
-        [self.view setTextForGuestsTextFiew:self.selectedGuest[kGoogleContactResponseNameKey]];
+        NSDictionary *data = self.contactsList[indexPath.item];
+        BRGuest *guest = [[BRGuest alloc] init];
+        guest.name = data[kGoogleContactResponseNameKey];
+        guest.email = data[kGoogleContactResponseEmailKey];
+        self.selectedGuest = guest;
+        [self.view setTextForGuestsTextFiew:self.selectedGuest.name];
         [self hideSearchCollectionView];
 
     } else if (collectionView.tag == 1) {
@@ -483,7 +491,7 @@ typedef enum {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)removeGuest:(NSDictionary *)guest {
+- (void)removeGuest:(BRGuest *)guest {
     [self dismissViewControllerAnimated:YES completion:nil];
 
     [self.guests removeObject:guest];

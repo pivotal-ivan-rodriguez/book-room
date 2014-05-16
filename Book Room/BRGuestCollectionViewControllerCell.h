@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class BRGuest;
+
 @interface BRGuestCollectionViewControllerCell : UICollectionViewCell
 
-- (void)configureForGuest:(NSDictionary *)guest;
+- (void)configureForGuest:(BRGuest *)guest;
 
 @end

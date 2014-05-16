@@ -17,7 +17,7 @@
 #pragma mark -
 #pragma mark Setters
 
-- (void)setGuest:(NSDictionary *)guest {
+- (void)setGuest:(BRGuest *)guest {
     _guest = guest;
     [self.view configureForGuest:_guest];
 }

@@ -9,17 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "BRRemoveGuestView.h"
 
+@class BRGuest;
+
 @protocol BRRemoveGuestViewControllerDelegate <NSObject>
 
 - (void)dismissGuestViewController;
-- (void)removeGuest:(NSDictionary *)guest;
+- (void)removeGuest:(BRGuest *)guest;
 
 @end
 
 @interface BRRemoveGuestViewController : UIViewController
 
 @property (nonatomic, strong) BRRemoveGuestView *view;
-@property (nonatomic, strong) NSDictionary *guest;
+@property (nonatomic, strong) BRGuest *guest;
 @property (nonatomic, weak) id<BRRemoveGuestViewControllerDelegate>delegate;
 
 @end

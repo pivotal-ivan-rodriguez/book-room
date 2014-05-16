@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class BRGuest;
+
 @protocol BRRemoveGuestViewDelegate <NSObject>
 
 - (void)didCancel;
@@ -19,6 +21,6 @@
 
 @property (nonatomic, weak) id<BRRemoveGuestViewDelegate>delegate;
 
-- (void)configureForGuest:(NSDictionary *)guest;
+- (void)configureForGuest:(BRGuest *)guest;
 
 @end

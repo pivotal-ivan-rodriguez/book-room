@@ -7,6 +7,7 @@
 //
 
 #import "BRRemoveGuestView.h"
+#import "BRGuest.h"
 
 @interface BRRemoveGuestView ()
 
@@ -31,8 +32,8 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)configureForGuest:(NSDictionary *)guest {
-    self.guestLabel.text = [NSString stringWithFormat:@"Remove %@ from the guest list?",guest[kGoogleContactResponseNameKey]];
+- (void)configureForGuest:(BRGuest *)guest {
+    self.guestLabel.text = [NSString stringWithFormat:@"Remove %@ from the guest list?",guest.name];
 }
 
 #pragma mark -
