@@ -359,7 +359,14 @@ typedef enum {
                 if (![result isKindOfClass:[NSDictionary class]]) continue;
 
                 NSString *name = result[kGoogleContactResponseNameKey][kGoogleContactResponseFullNameKey][@"text"];
-                NSString *email = result[kGoogleContactResponseEmailKey][@"address"];
+                id emailObject = result[kGoogleContactResponseEmailKey];
+                NSString *email;
+                if ([emailObject isKindOfClass:[NSDictionary class]]) {
+                    email = emailObject[@"address"];
+                } else if ([emailObject isKindOfClass:[NSArray class]]) {
+                    email = [emailObject firstObject][@"address"];
+                }
+
                 if (email) {
                     [self.contactsList addObject:@{kGoogleContactResponseNameKey:name?name:email,kGoogleContactResponseEmailKey:email}];
                 }
@@ -437,6 +444,10 @@ typedef enum {
     }
 
     return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(263, 30);
 }
 
 #pragma mark -

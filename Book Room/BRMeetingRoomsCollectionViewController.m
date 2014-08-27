@@ -61,7 +61,7 @@ static NSInteger const kMeetingRoomsFetchStep = 20;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSMutableArray *rooms = [NSMutableArray array];
 
-        for (int i=count;i<roomsCount+kMeetingRoomsFetchStep;i++) {
+        for (NSUInteger i=count;i<roomsCount+kMeetingRoomsFetchStep;i++) {
             if (i >= meetingRooms.count) break;
 
             NSDictionary *room = meetingRooms[i];

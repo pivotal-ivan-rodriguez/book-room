@@ -10,7 +10,7 @@
 
 @implementation BRConstants
 
-NSString * const kGoogleAppsDomain = @"pivotallabs.com";
+NSString * const kGoogleAppsDomain = @"pivotal.io";
 
 NSString * const kGoogleFeedKey = @"feed";
 NSString * const kGoogleEntryKey = @"entry";

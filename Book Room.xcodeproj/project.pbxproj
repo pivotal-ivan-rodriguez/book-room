@@ -55,6 +55,7 @@
 		4224331C191830DA00AF9488 /* BRHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4224331B191830DA00AF9488 /* BRHomeView.m */; };
 		42243323191840E500AF9488 /* HTTPCRUDOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 42243322191840E500AF9488 /* HTTPCRUDOperation.m */; };
 		4224332619191D2500AF9488 /* BRCalendarResourcesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4224332519191D2500AF9488 /* BRCalendarResourcesOperation.m */; };
+		425F4A0B192E900400FDF78B /* BRMainCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 425F4A0A192E900400FDF78B /* BRMainCollectionViewLayout.m */; };
 		426AF6BB1917F1B1006DC6D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BA1917F1B1006DC6D3 /* Security.framework */; };
 		426AF6BD1917F1B9006DC6D3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */; };
 		4271362E191951C3004A8487 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4271362D191951C3004A8487 /* XMLReader.m */; };
@@ -199,6 +200,8 @@
 		42243322191840E500AF9488 /* HTTPCRUDOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPCRUDOperation.m; sourceTree = "<group>"; };
 		4224332419191D2500AF9488 /* BRCalendarResourcesOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRCalendarResourcesOperation.h; sourceTree = "<group>"; };
 		4224332519191D2500AF9488 /* BRCalendarResourcesOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRCalendarResourcesOperation.m; sourceTree = "<group>"; };
+		425F4A09192E900400FDF78B /* BRMainCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRMainCollectionViewLayout.h; sourceTree = "<group>"; };
+		425F4A0A192E900400FDF78B /* BRMainCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRMainCollectionViewLayout.m; sourceTree = "<group>"; };
 		426AF6BA1917F1B1006DC6D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		426AF6BC1917F1B9006DC6D3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4271362C191951C3004A8487 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
@@ -573,6 +576,8 @@
 				42A25FE1191D1CD600F6F34F /* BRDatePickerView.m */,
 				42DC8FC5191D363300DDE206 /* BRRemoveGuestView.h */,
 				42DC8FC6191D363300DDE206 /* BRRemoveGuestView.m */,
+				425F4A09192E900400FDF78B /* BRMainCollectionViewLayout.h */,
+				425F4A0A192E900400FDF78B /* BRMainCollectionViewLayout.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -779,6 +784,7 @@
 				422432E11918109700AF9488 /* GTLCalendarEventReminder.m in Sources */,
 				42A542421917E33500D34B1D /* main.m in Sources */,
 				422433041918117E00AF9488 /* GTLUploadParameters.m in Sources */,
+				425F4A0B192E900400FDF78B /* BRMainCollectionViewLayout.m in Sources */,
 				422432E21918109700AF9488 /* GTLCalendarEvents.m in Sources */,
 				422432F81918113900AF9488 /* GTLDateTime.m in Sources */,
 				422432DF1918109700AF9488 /* GTLCalendarEventAttendee.m in Sources */,

@@ -7,6 +7,7 @@
 //
 
 #import "BRHomeView.h"
+#import "BRMainCollectionViewLayout.h"
 
 @interface BRHomeView () <UITextFieldDelegate>
 
@@ -94,6 +95,9 @@
     }
 }
 
+- (void)pinchGestureRecognized:(UIPinchGestureRecognizer *)pinch {
+}
+
 #pragma mark -
 #pragma mark Public Methods
 
@@ -121,7 +125,12 @@
     self.eventTitleTextField.delegate = self;
     self.guestsTextField.delegate = self;
 
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGestureRecognized:)];
+    pinch.cancelsTouchesInView = NO;
+    [self addGestureRecognizer:pinch];
+
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)];
+    [tap requireGestureRecognizerToFail:pinch];
     tap.cancelsTouchesInView = NO;
     [self addGestureRecognizer:tap];
 }
